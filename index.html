@@ -39,6 +39,308 @@ body.mf-admin{background:#f5f6f2!important}body.mf-admin #storefront{display:non
 </style>
 <style id="mf-delivery-style">.mf-fee-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.mf-fee-row{display:flex;align-items:center;gap:8px}.mf-fee-row label{flex:1;min-width:0}.mf-fee-row [data-fee-remove]{font-size:12px!important;padding:8px!important;color:#a23d4d}.mf-new-neighborhood{display:grid;grid-template-columns:minmax(0,1fr) 110px auto;gap:10px;align-items:end}.mf-new-neighborhood label{display:grid;gap:4px;font-size:13px}@media(max-width:600px){.mf-new-neighborhood{grid-template-columns:minmax(0,1fr) 100px}.mf-new-neighborhood button{grid-column:1/-1}.mf-fee-grid{grid-template-columns:minmax(0,1fr)}}
 .mf-bairro-field{position:relative}.mf-bairro-options{position:absolute;top:100%;left:0;right:0;z-index:30;max-height:225px;overflow:auto;background:#fff;border:1px solid #b8c7ad;border-radius:8px;box-shadow:0 8px 22px #20302022}.mf-bairro-options button{display:flex;justify-content:space-between;gap:12px;width:100%;text-align:left;background:white;color:#30452b;border:0;padding:11px 12px;cursor:pointer;font:inherit;font-size:13px}.mf-bairro-options button:hover,.mf-bairro-options button[aria-selected=true]{background:#edf3e7}.mf-bairro-options p{padding:12px;font-size:13px}.mf-delivery-live{background:#edf3e7;border-radius:10px;padding:13px;margin:14px 0;font-size:13px}.mf-delivery-live div{display:flex;justify-content:space-between;gap:12px;margin:3px 0}.mf-delivery-live div:last-child{border-top:1px solid #d1dcc8;padding-top:8px;margin-top:8px;font-size:16px}.mf-fee-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;max-height:480px;overflow:auto;padding:3px}.mf-fee-grid label{display:grid;grid-template-columns:minmax(0,1fr) 95px;align-items:center;gap:10px;font-size:13px}.mf-fee-grid input{text-align:right}#mf-fee-count{font-size:12px;color:#697461}
+
+#mf-panel .mf-stage-controls {display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.mf-admin [data-stage="waiting"] {--stage-bg:#ffe5e5;--stage-ink:#831e2a;--stage-edge:#cf3649}
+.mf-admin [data-stage="production"] {--stage-bg:#ffead7;--stage-ink:#813508;--stage-edge:#e87924}
+.mf-admin [data-stage="ready"] {--stage-bg:#fff2b8;--stage-ink:#604800;--stage-edge:#dba420}
+.mf-admin [data-stage="payment"],.mf-admin [data-stage="done"] {--stage-bg:#dff5e5;--stage-ink:#155333;--stage-edge:#40986a}
+.mf-admin [data-stage="delivery"] {--stage-bg:#e1efff;--stage-ink:#164784;--stage-edge:#4389ce}
+#mf-panel .mf-stage-controls button,.mf-admin .mf-stage {background:var(--stage-bg,#efedf1);color:var(--stage-ink,#50475a);border:1px solid var(--stage-edge,#987fa7);border-radius:8px;font-weight:750}
+#mf-panel .mf-stage-controls button {display:flex;align-items:center;gap:7px;min-height:39px;font-size:11px;padding:6px 9px}
+#mf-panel .mf-stage-controls button[aria-pressed="true"] {box-shadow:inset 0 0 0 1px var(--stage-edge,#987fa7),0 2px 4px #0002}
+.mf-stage-controls b {padding:1px 5px;border-radius:4px;background:#fff9}
+.mf-admin .mf-stage {display:inline-block;font-size:11px;line-height:1.3;padding:4px 7px}
+.mf-order-actions {display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.mf-order-actions .mf-button {white-space:nowrap}
+.mf-receiving {display:grid;gap:2px;border-left:3px solid #5081b3;border-radius:7px;background:#e5f0ff;color:#173e65;padding:5px 8px;font-weight:750;line-height:1.3;overflow-wrap:anywhere}
+.mf-receiving[data-mode="pickup"] {border-color:#9a6ab8;background:#f2e9fa;color:#50326e}
+.mf-receiving span {font-weight:650;font-size:12px}
+.mf-sales-tools {display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;margin-bottom:10px}
+.mf-sales-summary {display:flex;flex-wrap:wrap;gap:3px 12px;font-size:12px}
+.mf-sales-summary b {font-weight:750}
+.mf-pending {border:1px solid #ad2434;border-radius:10px;background:#fff;overflow:hidden}
+.mf-pending[open]{grid-column:1/-1}
+.mf-pending>summary {display:flex;align-items:center;gap:8px;min-height:50px;padding:8px 12px;background:#ad2434;color:white;font-size:14px;line-height:1.25;font-weight:750;cursor:pointer;list-style:none}
+.mf-pending>summary::-webkit-details-marker {display:none}
+.mf-pending>summary b {margin-left:auto;border-radius:4px;background:white;color:#911c2a;padding:2px 6px;flex-shrink:0}
+.mf-pending>summary::after {content:"";width:7px;height:7px;flex:0 0 7px;border-right:2px solid;border-bottom:2px solid;transform:rotate(45deg);margin:0 4px 4px 1px}
+.mf-pending[open]>summary::after {transform:rotate(225deg);margin-bottom:0}
+@media(prefers-reduced-motion:no-preference){.mf-pending:not([open]):not(:hover):not(:focus-within){animation:mf-pending-pulse 2.2s ease-out 2}}
+@keyframes mf-pending-pulse {0%{box-shadow:0 0 0 0 #d6314866}70%,100%{box-shadow:0 0 0 6px #d6314800}}
+.mf-pending-list {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:8px;padding:10px}
+.mf-pending-list article {display:grid;gap:5px;border:1px solid #e7eade;border-radius:8px;padding:8px}
+.mf-pay-inline {display:grid;gap:4px;margin-top:5px;min-width:126px;max-width:230px;font-size:11px}
+.mf-pay-inline label {display:grid;gap:2px;font-weight:700}
+#mf-panel .mf-pay-inline select {font-size:12px;padding:5px 6px}
+#mf-panel .mf-pay-inline .mf-pay-check {display:flex;align-items:flex-start;gap:5px;font-weight:400}
+#mf-panel .mf-pay-inline .mf-pay-check input {width:auto;margin-top:2px}
+#mf-panel .mf-pay-inline .mf-button,.mf-order-actions .mf-button {min-height:30px;padding:4px 7px;font-size:11px}
+#mf-panel .mf-order-tools {margin:0 0 8px}
+#mf-panel .mf-sales-top {padding-block:9px;min-height:0;margin-bottom:8px}
+#mf-modal.mf-order-compact {width:min(900px,calc(100vw - 18px))}
+#mf-modal.mf-order-compact .mf-modal-head {padding:9px 14px;gap:8px}
+#mf-modal.mf-order-compact .mf-modal-head h2 {font-size:clamp(20px,3vw,25px)}
+#mf-modal.mf-order-compact .mf-modal-body {padding:10px 14px}
+.mf-order-overview {display:grid;gap:7px}
+#mf-modal.mf-order-compact .mf-detail-grid {grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin:0;overflow-wrap:anywhere}
+#mf-modal.mf-order-compact .mf-detail-grid>div {font-size:12px}
+#mf-modal.mf-order-compact .mf-detail-grid :is(p,small) {margin:0}
+#mf-modal.mf-order-compact .mf-order-items {margin:0;padding:4px 8px}
+#mf-modal.mf-order-compact .mf-order-items>div {display:flex;justify-content:space-between;gap:7px;padding:3px 0}
+.mf-order-message {margin:0;font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.mf-timeline h3 {margin:0;font-size:13px}
+.mf-timeline ol {display:flex;overflow-x:auto;gap:0;list-style:none;margin:2px 0 0;padding:0 0 4px;scrollbar-width:thin}
+.mf-timeline li {position:relative;flex:0 0 94px;text-align:center;padding:12px 2px 1px;font-size:11px;line-height:1.2}
+.mf-timeline li::before {content:"";position:absolute;top:1px;left:calc(50% - 4px);width:8px;height:8px;border-radius:50%;background:#54826a;z-index:1}
+.mf-timeline li:not(:last-child)::after {content:"";position:absolute;top:4px;left:50%;width:100%;height:1px;background:#b7cab9}
+.mf-timeline small {display:block;margin-top:2px}
+.mf-order-settings {border-top:1px solid #e7eade;padding-top:5px}
+.mf-order-settings summary {font-size:13px;font-weight:750;padding:5px 0;cursor:pointer}
+@media(max-width:710px){
+ .mf-sales-tools {grid-template-columns:minmax(0,1fr)}
+ #mf-modal.mf-order-compact .mf-detail-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+</style><style id="manaus-layout-santarem">
+#mf-panel { --p-bg:#f4f6f3;--p-card:#fff;--p-ink:#21372e;--p-muted:#7b8981;--p-line:#e4eae3;--p-green:#1e493a;--p-soft:#edf3ed;--p-gold:#cba968;--p-shadow:0 4px 20px #1c382b05;background:var(--p-bg);color:var(--p-ink);font:14px/1.5 'Jost',system-ui,sans-serif; }
+#mf-panel.sf-dark { --p-bg:#13231d;--p-card:#1b3027;--p-ink:#e8efe7;--p-muted:#a0b0a6;--p-line:#31483b;--p-green:#91bea1;--p-soft:#263e32;--p-shadow:none;background:var(--p-bg);color:var(--p-ink); }
+#mf-panel .sf-icon { width:20px;height:20px;flex-shrink:0;vertical-align:middle; }
+#mf-panel .sf-h { height:76px;min-height:76px;position:sticky;top:0;z-index:40;padding:0 30px 0 282px;gap:17px;background:var(--p-card);color:var(--p-ink);border-bottom:1px solid var(--p-line);flex-wrap:nowrap; }
+#mf-panel .sf-header-title { font-size:12px;color:var(--p-muted);white-space:nowrap; }
+#mf-panel .sf-h .sf-icon-button { width:36px;height:36px;min-width:36px;padding:0;display:inline-grid;place-items:center;border:1px solid transparent;border-radius:9px;color:var(--p-muted);background:transparent; }
+#mf-panel .sf-h .sf-icon-button:hover { background:var(--p-soft);color:var(--p-ink); }
+#mf-panel .sf-h .sf-hb { display:none; }
+#mf-panel .sf-user { display:flex;align-items:center;gap:10px;font-size:12px;white-space:nowrap;border-left:1px solid var(--p-line);padding-left:18px; }
+#mf-panel .sf-user>b { width:36px;height:36px;display:grid;place-items:center;background:var(--p-soft);color:var(--p-green);border-radius:50%;font-size:12px;font-weight:500; }
+#mf-panel .sf-user small { display:block;color:var(--p-muted);font-size:10px; }
+#mf-panel .sf-site-link { color:var(--p-ink);text-decoration:none;font-size:12px;display:flex;align-items:center;gap:8px;white-space:nowrap; }
+#mf-panel .sf-site-link svg { width:14px;height:14px; }
+#mf-panel #sf-sync { margin-left:auto;display:flex;align-items:center;gap:7px;min-width:145px; }
+#mf-panel #sf-sync>span { flex:none;order:initial;font-size:10px;color:var(--p-muted);opacity:1; }
+#mf-panel #sf-sync i { width:6px;height:6px;background:#81a98b;border-radius:50%; }
+#mf-panel #sf-sync[data-state=error] i { background:#cd725e; }
+#mf-panel #sf-sync[data-state=loading] i { background:#cfb067;animation:sf-sync-pulse .9s infinite alternate; }
+#mf-panel .sf-shell { min-height:calc(100svh - 76px);padding-left:252px;display:block; }
+#mf-panel .sf-sb { width:252px;position:fixed;top:0;left:0;bottom:0;height:100svh;padding:25px 17px 18px;background:#173c30;color:#c1d1c7;border:0;z-index:50;overflow:auto;display:flex;flex-direction:column;transform:none;box-shadow:none; }
+#mf-panel .sf-side-brand { display:flex;align-items:center;gap:12px;margin:0 10px 30px; }
+#mf-panel .sf-side-brand img { width:46px;height:46px;object-fit:cover;border-radius:50%;border:1px solid #b8a86e66; }
+#mf-panel .sf-side-brand b { display:block;font:400 24px/1 Georgia,serif;color:#f4ecd8;letter-spacing:-.02em; }
+#mf-panel .sf-side-brand small { font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#c4b482; }
+#mf-panel .sf-side-label { padding:0 13px 8px;font-size:8px;letter-spacing:.16em;color:#7b9c89; }
+#mf-panel .sf-sg { padding:17px 13px 6px;font-size:9px;letter-spacing:.12em;opacity:1;color:#779b87; }
+#mf-panel .sf-sb button { position:relative;width:100%;min-height:44px;padding:10px 13px;gap:12px;margin:2px 0;border-radius:8px;font-size:12px;font-weight:400;color:#c4d4c9; }
+#mf-panel .sf-sb button .sf-icon { width:17px;height:17px; }
+#mf-panel .sf-sb button.on { background:#2b5241;color:#fff1cd;font-weight:500; }
+#mf-panel .sf-sb button.on::before { content:'';position:absolute;left:-17px;top:12px;bottom:12px;width:3px;background:#d2ba7d;border-radius:0 3px 3px 0; }
+#mf-panel .sf-sb button:hover:not(.on) { background:#ffffff09;color:#fff; }
+#mf-panel .sf-sb button em { margin-left:auto;font-style:normal;font-size:9px;line-height:20px;min-width:20px;border-radius:5px;background:#ffffff0d;text-align:center; }
+#mf-panel .sf-side-footer { margin:30px 12px 0;padding-top:20px;border-top:1px solid #ffffff12;display:flex;align-items:center;gap:10px;color:#88a38e;font-size:10px;line-height:1.5; }
+#mf-panel .sf-side-footer svg { color:#c2b179;width:26px;height:26px; }
+#mf-panel .sf-c { width:100%;max-width:1600px;margin:0 auto;padding:30px 36px 20px; }
+#mf-panel .sf-page-head { display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:29px; }
+#mf-panel .sf-eyebrow { margin:0 0 9px;font-size:8px;font-weight:500;letter-spacing:.16em;color:var(--p-muted);text-transform:uppercase; }
+#mf-panel .sf-eyebrow span { color:#a6afa7;letter-spacing:.05em; }
+#mf-panel .sf-page-head h1 { font:500 30px/1.25 'Jost',sans-serif;letter-spacing:-.045em;margin:0 0 5px;color:var(--p-ink); }
+#mf-panel .sf-page-head>div>p:last-child { margin:0;color:var(--p-muted);font-size:12px; }
+#mf-panel .sf-b .sf-icon { width:15px;height:15px; }
+#mf-panel .sf-text-button .sf-icon { width:14px;height:14px; }
+#mf-panel .sf-overview { display:grid;grid-template-columns:1.05fr 1fr;gap:20px;margin-bottom:20px; }
+#mf-panel .sf-welcome { position:relative;isolation:isolate;overflow:hidden;min-height:244px;background:#e7eee4;border:1px solid #e0e8dc;border-radius:13px;padding:25px 28px;color:#214535; }
+#mf-panel .sf-welcome::after { content:'';position:absolute;z-index:-1;width:240px;height:240px;right:-85px;top:-60px;border:1px solid #becfb580;border-radius:50%;box-shadow:0 0 0 30px #c5d7bc25,0 0 0 60px #c5d7bc15; }
+#mf-panel .sf-welcome>span { display:flex;align-items:center;gap:7px;font-size:8px;letter-spacing:.16em;color:#72856d; }
+#mf-panel .sf-welcome>span svg { width:13px;height:13px; }
+#mf-panel .sf-welcome h2 { font:400 32px/1.12 Georgia,serif;letter-spacing:-.035em;margin:15px 0 10px; }
+#mf-panel .sf-welcome p { color:#7c8c77;font-size:11px;line-height:1.65;max-width:310px;margin:0; }
+#mf-panel .sf-welcome button { display:flex;align-items:center;gap:15px;border:0;border-bottom:1px solid #abbda2;padding:12px 0 5px;margin-top:6px;color:#264f3c;background:none;font-size:10px; }
+#mf-panel .sf-welcome button svg { width:15px;height:15px; }
+#mf-panel .sf-agenda { background:var(--p-card);border:1px solid var(--p-line);border-radius:13px;padding:20px 23px;box-shadow:var(--p-shadow); }
+#mf-panel .sf-section-title { display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px; }
+#mf-panel .sf-section-title h2 { margin:0;font-size:13px;font-weight:500;letter-spacing:-.02em; }
+#mf-panel .sf-section-title p { color:var(--p-muted);font-size:11px;margin:4px 0 0; }
+#mf-panel .sf-section-title>svg { color:var(--p-muted);width:16px;height:16px; }
+#mf-panel .sf-section-title small { font-size:9px;color:var(--p-muted); }
+#mf-panel .sf-agenda>button { width:100%;display:flex;align-items:center;gap:14px;padding:12px 0;border:0;border-bottom:1px solid var(--p-line);background:none;color:var(--p-ink);text-align:left; }
+#mf-panel .sf-agenda>button:last-child { border-bottom:0;padding-bottom:0; }
+#mf-panel .sf-agenda-time { width:60px;flex-shrink:0;font-size:12px;font-weight:500; }
+#mf-panel .sf-agenda button span:nth-child(2) { flex:1;min-width:0; }
+#mf-panel .sf-agenda button b { display:block;font-size:11px;font-weight:500; }
+#mf-panel .sf-agenda button small { display:block;font-size:9px;color:var(--p-muted);max-width:210px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden; }
+#mf-panel .sf-agenda button i { color:var(--p-muted); }
+#mf-panel .sf-agenda button i svg { width:14px;height:14px; }
+#mf-panel .sf-kc { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:23px; }
+#mf-panel .kc { position:relative;min-width:0;min-height:101px;padding:19px 18px;border:1px solid var(--p-line);border-radius:11px;display:flex;gap:12px;align-items:center;box-shadow:var(--p-shadow);background:var(--p-card);color:var(--p-ink);text-align:left; }
+#mf-panel .kc .ki { width:37px;height:37px;border-radius:9px;display:grid;place-items:center;background:var(--p-soft);color:var(--p-green);flex-shrink:0; }
+#mf-panel .kc .ki svg { width:18px;height:18px; }
+#mf-panel .kc.blue .ki { background:#eaf0f6;color:#5d7892; }
+#mf-panel .kc.warn .ki { background:#f8efdc;color:#a38a53; }
+#mf-panel .kc small { display:block;font-size:9px;color:var(--p-muted);margin-bottom:5px; }
+#mf-panel .kc b { display:block;font-weight:500;font-size:22px;line-height:1.2;letter-spacing:-.04em;white-space:nowrap; }
+#mf-panel .kc .kc-arrow { display:none; }
+#mf-panel .sf-analytics { display:grid;grid-template-columns:1.2fr 1fr;gap:20px;margin:20px 0 29px; }
+#mf-panel .sf-chart { background:var(--p-card);border:1px solid var(--p-line);border-radius:12px;box-shadow:var(--p-shadow);padding:23px; }
+#mf-panel .sf-stage-line { display:flex;gap:10px;align-items:center;width:100%;padding:10px 0;border:0;border-bottom:1px solid var(--p-line);color:var(--p-muted);background:none;font-size:10px; }
+#mf-panel .sf-stage-line:last-child { border:0; }
+#mf-panel .sf-stage-line b { margin-left:auto;color:var(--p-ink);font-weight:500; }
+#mf-panel .sf-stage-line svg { width:13px;height:13px;margin-left:10px; }
+#mf-panel .sf-stage-dot { width:6px;height:6px;border-radius:50%;background:#8aa797; }
+#mf-panel .sf-stage-dot.st1,#mf-panel .sf-stage-dot.st2 { background:#d4b271; }
+#mf-panel .sf-stage-dot.st3 { background:#7f9fc1; }
+#mf-panel .sf-stage-dot.st5 { background:#d1a197; }
+#mf-panel .sf-orders-panel { background:var(--p-card);border:1px solid var(--p-line);border-radius:12px;overflow:hidden;box-shadow:var(--p-shadow); }
+#mf-panel .sf-order-filters { display:grid;grid-template-columns:1.7fr repeat(4,minmax(95px,1fr));align-items:end;gap:10px;padding:18px 20px 13px; }
+#mf-panel .sf-search { position:relative;display:flex;align-items:center;height:38px; }
+#mf-panel .sf-search>svg { position:absolute;left:10px;width:15px;height:15px;color:var(--p-muted);pointer-events:none; }
+#mf-panel .sf-search input { width:100%;height:38px;padding:8px 10px 8px 34px;background:var(--p-card);border:1px solid var(--p-line);border-radius:6px;color:var(--p-ink);font-size:10px; }
+#mf-panel .sf-filter-field>span { display:block;font-size:9px;color:var(--p-muted);margin-bottom:5px; }
+#mf-panel .sf-filter-field select { width:100%;height:38px;min-width:0;font-size:10px;border:1px solid var(--p-line);padding:6px 8px;background:var(--p-card);border-radius:6px;color:var(--p-ink); }
+#mf-panel .sf-orders-results { display:flex;align-items:center;justify-content:space-between;gap:10px;padding:2px 20px 15px;font-size:10px;color:var(--p-muted); }
+#mf-panel .sf-orders-results>div { display:flex;gap:18px; }
+#mf-panel .sf-orders-results button { font-size:10px; }
+#mf-panel .sf-orders-panel .sf-t { border:0;border-radius:0;box-shadow:none; }
+#mf-panel .sf-pg { display:flex;align-items:center;justify-content:space-between;padding:15px 20px;margin:0;font-size:10px;color:var(--p-muted);gap:10px;border-top:1px solid var(--p-line); }
+#mf-panel .sf-pg button { border:1px solid var(--p-line);border-radius:5px;background:var(--p-card);color:var(--p-ink);padding:6px 11px;font-size:10px; }
+#mf-panel .sf-pg .sf-row { gap:12px; }
+#mf-panel .sf-page-footer { display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:32px;padding-top:17px;border-top:1px solid var(--p-line);font-size:9px;color:var(--p-muted); }
+#mf-panel.sf-dark .sf-welcome { background:#294d3a;border-color:#365940;color:#ecedd8; }
+#mf-panel.sf-dark .sf-welcome p,#mf-panel.sf-dark .sf-welcome>span,#mf-panel.sf-dark .sf-welcome button { color:#b1c0a3; }
+#mf-panel.sf-dark .sf-k>div,#mf-panel.sf-dark .sf-card,#mf-panel.sf-dark .sf-chart,#mf-panel.sf-dark .sf-t table,#mf-panel.sf-dark .sf-f,#mf-panel.sf-dark .sf-md,#mf-panel.sf-dark .sf-t.o tr { background:var(--p-card);border-color:var(--p-line);color:var(--p-ink); }
+#mf-panel.sf-dark .sf-sb { background:#102d22;color:#bdcfc2; }
+#mf-panel.sf-dark .sf-sb button { color:#c4d4c9; }
+#mf-panel.sf-dark .sf-sb button.on { background:#2b5241;color:#fff1cd; }
+#mf-panel .sf-login-screen { display:grid;grid-template-columns:1fr 1fr;min-height:100svh;background:#fbfcf9; }
+#mf-panel .sf-login-art { position:relative;background:#173c30;color:#f7efd9;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(40px,7vw,120px);overflow:hidden; }
+#mf-panel .sf-login-art::after { content:'';position:absolute;width:500px;height:500px;border:1px solid #a3b99c22;border-radius:50%;right:-280px;bottom:-170px;box-shadow:0 0 0 55px #a3b99c08,0 0 0 110px #a3b99c05;pointer-events:none; }
+#mf-panel .sf-login-art>img { width:100px;height:100px;border-radius:50%;margin-bottom:45px;border:1px solid #c5ba8855; }
+#mf-panel .sf-login-art .sf-eyebrow { color:#a2b79b;font-size:9px; }
+#mf-panel .sf-login-art h1 { font:400 clamp(40px,4.2vw,70px)/1.08 Georgia,serif;letter-spacing:-.04em;margin:15px 0 25px; }
+#mf-panel .sf-login-art>p:not(.sf-eyebrow) { font-size:13px;line-height:1.9;color:#9ab29f;margin:0; }
+#mf-panel .sf-login-art>span { position:absolute;bottom:40px;color:#6d9279;font-size:8px;letter-spacing:.24em; }
+#mf-panel .sf-login { width:min(100% - 60px,360px);max-width:none;display:flex;flex-direction:column;gap:0;margin:auto;padding:0;background:transparent;color:#21372e;border:0;border-radius:0;box-shadow:none;text-align:left; }
+#mf-panel .sf-login h2 { font-size:28px;font-weight:500;letter-spacing:-.04em;margin:0 0 8px; }
+#mf-panel .sf-login form { display:grid;gap:20px; }
+#mf-panel .sf-login form>label>span { display:block;font-size:11px;color:#67796b;margin-bottom:7px; }
+#mf-panel .sf-login input { font:inherit;width:100%;padding:12px 13px;border:1px solid #dde5da;border-radius:7px;background:#fff;color:#21372e;min-height:44px; }
+#mf-panel .sf-login input::placeholder { color:#a4aea3;font-size:11px; }
+#mf-panel .sf-login form .sf-b { width:100%;justify-content:space-between;min-height:46px;padding:12px 16px; }
+#mf-panel .sf-sb button { font-size:13px; }
+#mf-panel .sf-sg { font-size:10px; }
+#mf-panel .kc small { font-size:10px; }
+#mf-panel .sf-search input,#mf-panel .sf-filter-field select { font-size:11px; }
+#mf-panel .sf-filter-field>span { font-size:10px; }
+#mf-panel.sf-dark .kc { background:var(--p-card);border-color:var(--p-line);color:var(--p-ink); }
+#mf-panel.sf-dark .sf-login { background:transparent;color:#21372e; }
+#mf-panel.sf-dark .sf-sb button:hover:not(.on) { background:#ffffff09;color:#fff; }
+body.mf-admin {background:#f4f6f3!important}
+body.mf-admin.mf-dark {background:#13231d!important}
+#mf-panel .sf-h {display:flex;align-items:center}
+#mf-panel .sf-hb {flex:none}
+#mf-panel .sf-site-link {border:1px solid var(--p-line);border-radius:8px;padding:7px 10px}
+#mf-panel #sf-sync .mf-sync {white-space:nowrap}
+#mf-panel .sf-sbx {display:none}
+#mf-panel .sf-sb .mf-nav {display:block;overflow:visible}
+#mf-panel .sf-sb button {display:flex;align-items:center;background:none;border:0;text-align:left;white-space:normal}
+#mf-panel .sf-sb button.on {background:#2b5241}
+#mf-panel .sf-side-brand {margin-bottom:20px}
+#mf-panel .sf-side-brand b {font-size:22px}
+#mf-panel .sf-side-footer {margin-top:auto}
+#mf-panel .sf-c {min-width:0}
+#mf-panel .mf-sales-main {padding-top:16px}
+#mf-panel .mf-sales-head {gap:12px;margin-bottom:9px}
+#mf-panel .mf-sales-head>div {display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;min-width:0}
+#mf-panel .mf-sales-head h1 {margin:0;font-size:clamp(24px,2.2vw,30px);line-height:1.12}
+#mf-panel .mf-sales-head .primary {flex:none}
+#mf-panel .mf-sales-summary span {display:flex;align-items:center;gap:5px}
+#mf-panel .mf-sales-summary svg {width:14px;height:14px;color:var(--p-muted)}
+#mf-panel .mf-stage-controls {padding:12px 16px;margin:0;border-bottom:1px solid var(--p-line)}
+#mf-panel .sf-order-filters {grid-template-columns:1.6fr repeat(5,minmax(0,1fr))}
+#mf-panel .sf-order-filters input,#mf-panel .sf-order-filters select {background:var(--p-card);color:var(--p-ink);border:1px solid var(--p-line);border-radius:6px;padding:6px 8px;height:38px;font-size:12px}
+#mf-panel .sf-order-filters .sf-search input {padding-left:32px}
+#mf-panel .sf-filter-field>span {font-size:11px}
+#mf-panel .sf-orders-results {align-items:center}
+#mf-panel .sf-orders-results>div {display:flex;flex-wrap:wrap;gap:9px}
+#mf-panel .sf-orders-results .mf-button {background:none;border:0;min-height:30px;padding:4px 0;color:var(--p-green)}
+#mf-panel .sf-orders-panel .mf-table {min-width:0}
+#mf-panel .mf-box,#mf-panel .mf-metric,#mf-panel .mf-pcard,#mf-panel .mf-permissions>div,
+#mf-panel .mf-table,#mf-panel .mf-pending,#mf-panel .mf-pending-list article {
+ background:var(--p-card);color:var(--p-ink);border-color:var(--p-line);
+}
+#mf-panel .mf-pending {border-color:#ad2434}
+#mf-panel .mf-box-head,#mf-panel .mf-list-row,#mf-panel .mf-table td {border-color:var(--p-line)}
+#mf-panel .mf-box-head h2 {font:600 15px 'Jost',system-ui,sans-serif}
+#mf-panel .mf-table thead th {background:var(--p-bg);color:var(--p-muted);border:0;padding:10px 15px}
+#mf-panel .mf-table td {padding:13px 15px;overflow-wrap:anywhere}
+#mf-panel .mf-table small,#mf-panel .mf-hint,#mf-panel .mf-metric :is(small,span) {color:var(--p-muted)}
+#mf-panel .mf-table tr:hover td {background:var(--p-soft)}
+#mf-panel .mf-order-person {display:flex;align-items:center;gap:9px}
+#mf-panel .mf-order-initial {display:grid;place-items:center;flex:0 0 29px;height:29px;background:var(--p-soft);color:var(--p-green);border-radius:50%;font-size:11px}
+#mf-panel .mf-admin-actions {display:flex;flex-wrap:wrap;gap:8px;padding:16px}
+#mf-panel .mf-button,#mf-modal .mf-button {display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--p-card,#fff);color:var(--p-ink,#21372e);border-color:var(--p-line,#e4eae3);border-radius:7px}
+#mf-panel .mf-button.primary,#mf-modal .mf-button.primary {background:#204c3b;color:white;border-color:#204c3b}
+#mf-panel .mf-button svg {width:15px;height:15px}
+#mf-panel .mf-button:hover,#mf-modal .mf-button:hover {border-color:var(--p-green,#204c3b)}
+#mf-panel .mf-row-actions [data-ma="delete-order"],#mf-modal .mf-row-actions [data-ma="delete-order"] {color:#a34558;border-color:#edcdd4}
+#mf-panel .mf-activity-bars {height:185px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+#mf-panel .mf-activity-bars>div {display:grid;grid-template-rows:auto 1fr auto;text-align:center;gap:4px;font-size:11px;color:var(--p-muted)}
+#mf-panel .mf-activity-bars i {align-self:end;justify-self:center;width:min(25px,80%);height:var(--bar);min-height:3px;border-radius:5px 5px 0 0;background:#91ac8a}
+#mf-panel .sf-stage-line:nth-of-type(2n) .sf-stage-dot {background:#deb45e}
+#mf-panel .sf-login {border:0;box-shadow:none}
+#mf-panel .sf-login h1,#mf-panel .sf-login>p {text-align:left}
+#mf-panel .sf-login>h1 {font:500 28px 'Jost',system-ui,sans-serif}
+#mf-panel .sf-login>p {margin:4px 0 16px}
+#mf-panel .sf-login .mf-link {text-align:left}
+#mf-panel .sf-login-form-title {display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em}
+#mf-modal {--p-card:#fff;--p-ink:#21372e;--p-line:#e4eae3;background:var(--p-card);color:var(--p-ink)}
+body.mf-dark #mf-modal {--p-card:#1b3027;--p-ink:#e8efe7;--p-line:#31483b}
+#mf-modal .mf-modal-head {background:var(--p-card);border-color:var(--p-line)}
+body.mf-dark :is(#mf-panel,#mf-modal) :is(input:not([type=checkbox]),select,textarea) {color:#e8efe7;background:#1b3027;border-color:#31483b;color-scheme:dark}
+body.mf-dark #mf-panel :is(.mf-list,.mf-permissions,.mf-note,.mf-empty) {background:#1b3027;color:#e8efe7}
+body.mf-dark #mf-modal :is(.mf-order-items,.mf-note) {background:#263e32;color:#e8efe7}
+body.mf-dark :is(#mf-modal .mf-modal-foot,#mf-modal .mf-order-settings,#mf-modal .mf-order-items) {border-color:#31483b}
+body.mf-dark #mf-panel .sf-login,body.mf-dark #mf-panel .sf-login h1 {color:#21372e}
+body.mf-dark #mf-panel .sf-login input {background:white;color:#21372e;color-scheme:light}
+@media(max-width:1200px){#mf-panel .sf-order-filters {grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){
+ #mf-panel .sf-h {height:57px;min-height:57px;padding:0 10px;gap:6px}
+ #mf-panel .sf-shell {padding-left:0}
+ #mf-panel .sf-sb {transform:translateX(-100%);visibility:hidden;transition:transform .2s ease,visibility .2s;width:min(252px,86vw)}
+ #mf-panel .sf-shell.open .sf-sb {transform:translateX(0);visibility:visible}
+ #mf-panel .sf-shell.open .sf-sbx {display:block;position:fixed;inset:0;z-index:45;background:#101e19a3;border:0}
+ #mf-panel .sf-h .sf-hb {display:inline-grid}
+ #mf-panel .sf-c {padding-inline:16px}
+}
+@media(max-width:620px){
+ #mf-panel .sf-header-title {overflow:hidden;text-overflow:ellipsis}
+ #mf-panel #sf-sync {min-width:0}
+ #mf-panel #sf-sync>span,#mf-panel .sf-user,#mf-panel .sf-site-link span {display:none}
+ #mf-panel .sf-site-link {padding:6px}
+ #mf-panel .sf-h .sf-icon-button {width:29px;height:34px;min-width:29px}
+ #mf-panel .sf-c {padding:14px 12px 18px}
+ #mf-panel .sf-page-head {gap:9px;margin-bottom:13px}
+ #mf-panel .sf-page-head h1 {font-size:24px}
+ #mf-panel .sf-page-head>.primary {padding:6px 8px;font-size:11px}
+ #mf-panel .mf-sales-tools {grid-template-columns:minmax(0,1fr)}
+ #mf-panel .sf-order-filters {grid-template-columns:repeat(2,minmax(0,1fr));padding:11px}
+ #mf-panel .sf-search {grid-column:1/-1}
+ #mf-panel .sf-orders-results {padding:4px 11px 8px}
+ #mf-panel .sf-orders-panel .mf-table thead {position:absolute;clip-path:inset(50%);height:1px;width:1px;overflow:hidden}
+ #mf-panel .sf-orders-panel .mf-table,:is(#mf-panel .sf-orders-panel .mf-table tbody,#mf-panel .sf-orders-panel .mf-table td) {display:block;width:100%}
+ #mf-panel .sf-orders-panel .mf-table tr {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--p-line);padding:8px}
+ #mf-panel .sf-orders-panel .mf-table td {padding:5px 6px;border:0}
+ #mf-panel .sf-overview,#mf-panel .sf-analytics {grid-template-columns:1fr;gap:10px}
+ #mf-panel .sf-kc {grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #mf-panel .kc {padding:9px;min-height:70px;gap:6px}
+ #mf-panel .kc b {font-size:16px;white-space:normal}
+ #mf-panel .kc .ki {width:27px;height:27px}
+ #mf-panel .sf-login-screen {display:block;padding-bottom:22px}
+ #mf-panel .sf-login-art {padding:22px;min-height:0}
+ #mf-panel .sf-login-art>img {margin:0 0 9px;width:54px;height:54px}
+ #mf-panel .sf-login-art h1 {font-size:24px;margin:0}
+ #mf-panel .sf-login-art>p {display:none}
+ #mf-panel .sf-login {margin:18px auto 0}
+}
+@media(prefers-reduced-motion:reduce){#mf-panel *,#mf-modal *{animation:none!important;transition:none!important}}
+
 </style></head><body class="mf-admin"><div id="storefront" hidden><a class="brand"><img src="data:image/webp;base64,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" alt="Manaus Flores"></a></div><main id="mf-panel"></main><dialog id="mf-modal"></dialog><div id="mf-toast" role="status" hidden></div><script>window.SF_LOJA='mf';window.SF_DB={url:'https://eiinxbucielyxvvedcqv.supabase.co',key:'sb_publishable_gy4k91MBkNF9QIX_KLr-RA_uDkNwEsm'};
 window.MF_SELLERS = Object.freeze({
   paulo: Object.freeze({ name: 'Paulo', phone: '5592993578792' }),
@@ -72,28 +374,143 @@ const dayOf=s=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/Manaus',year:'
 let token='';try{token=sessionStorage.getItem('mf:session')||'';}catch(_){}
 let D={products:[],orders:[],stock:[],expenses:[],receipts:[],categories:[],settings:MF_SETTINGS};
 let tab='inicio',range='mes',anchor=today(),filter='',query='',busy=false,loaded=false,authed=false,setup=false,editImages=[],editProduct=null,editOrder=null,formDirty=false;
-const siteUrl = location.protocol === 'file:'
-  ? 'Manaus_Flores.html' : 'https://manaus-flores-psi.vercel.app/';
+const stageDefs=[['waiting','Aguardando produção','Novo','Confirmado'],['production','Em produção','Em produção'],['ready','Pronto','Pronto'],['payment','Aguardando pagamento'],['delivery','Saiu para entrega','Em entrega'],['cancelled','Cancelado','Cancelado']];
+const active=o=>!['Concluído','Cancelado'].includes(o.status);
+const unpaid=o=>active(o)&&dueTotal(o)>0.005;
+const pending=o=>active(o)&&(o.status==='Novo'||unpaid(o)||o.data.e==='Entrega'&&o.delivery_fee==null);
+const stageMatch=(o,s)=>s[0]==='payment'?unpaid(o):s.slice(2).includes(o.status);
+const statusText=s=>s==='Em entrega'?'Saiu para entrega':s;
+let pendingOpen=false,historyRange='todos',historyAnchor=today();
+function orderBadge(o){
+ const stage=stageDefs.find(s=>s.slice(2).includes(o.status));
+ return `<span class="mf-stage" data-stage="${stage?.[0]||'done'}">${E(statusText(o.status))}</span>`;
+}
+function receiving(f,address=false){
+ const delivery=f.e==='Entrega';
+ return `<div class="mf-receiving" data-mode="${delivery?'delivery':'pickup'}"><b>${E(f.e||'Retirada')}</b>${address?`<span>${E(delivery?f.a||'Endereço a combinar':MF_SETTINGS.address)}</span>`:''}</div>`;
+}
+const schedule=f=>f.periodo_data?date(f.periodo_data)+(f.periodo==='manha'?' · Manhã · 08h–12h':f.periodo==='tarde'?' · Tarde · 13h–21h':''):'Sem horário definido';
+const orderAttrs=o=>`data-id="${E(o.id)}" data-version="${E(o.updated_at)}"`;
+function paymentPicker(o){
+ if(!canSell()||!unpaid(o))return '';
+ const method=E(o.data.p||'A definir');
+ if(o.installments?.length||o.delivery_fee==null){
+  return `<div class="mf-pay-inline"><b>Pagamento: ${method}</b>${btn(o.installments?.length?'Ver parcelas':'Definir frete','order',orderAttrs(o))}</div>`;
+ }
+ return `<form class="mf-pay-inline" data-mf="quick-payment" ${orderAttrs(o)}><b>Pagamento: ${method}</b><label class="mf-pay-check"><input type="checkbox" name="settle" required> Recebi o saldo de ${R(dueTotal(o))}</label><button class="mf-button" type="submit">Confirmar pagamento</button></form>`;
+}
+function saveOrderValues(o,fields){
+ return {
+  id:o.id,expected_updated_at:o.updated_at,status:o.status,delivery_fee:o.delivery_fee,net:o.net,
+  received:o.received,installments:o.installments||[],staff_note:o.staff_note, ...fields
+ };
+}
+
+function deliveryAction(o){
+ return o.status==='Em entrega'&&o.data.e==='Entrega'&&(canSell()||me?.role==='entregador')?btn('Confirmar entrega','complete-delivery',orderAttrs(o),true):'';
+}
+function orderStages(base){
+ const keys=tab==='producao'?['waiting','production','ready']:tab==='entregas'?['ready','delivery']:null;
+ return `<div class="mf-stage-controls" role="group" aria-label="Etapas dos pedidos">${stageDefs.filter(s=>!keys||keys.includes(s[0])).map(s=>`<button type="button" data-ma="order-stage" data-stage="${s[0]}" aria-pressed="${filter===s[0]}">${E(s[1].toLocaleUpperCase('pt-BR'))} <b>${base.filter(o=>stageMatch(o,s)).length}</b></button>`).join('')}</div>`;
+}
+function pendingPanel(list){
+ if(!list.length||!canSell())return '';
+ return `<details class="mf-pending" id="mf-pending" ${pendingOpen?'open':''}><summary><span>Pré-pedidos e liberações pendentes</span><b>${list.length}</b></summary><div class="mf-pending-list">${list.map(o=>`<article><b>#MF-${E(o.id)} · ${E(o.data.c)}</b>${sellerLine(o)}<div class="mf-order-actions">${orderBadge(o)}${unpaid(o)?'<span class="mf-stage" data-stage="payment">Aguardando pagamento</span>':''}${o.data.e==='Entrega'&&o.delivery_fee==null?'<small>Frete a confirmar</small>':''}</div>${paymentPicker(o)}<div class="mf-row-actions">${btn('Ver pedido','order',orderAttrs(o))}${btn('Editar informações','edit-pending',orderAttrs(o))}</div></article>`).join('')}</div></details>`;
+}
+function orderTimeline(o){
+ const entries=[{status:'Novo',at:o.created_at}];
+ if(entries.at(-1)?.status!==o.status)entries.push({status:o.status});
+ const fmt=new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Manaus',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+ return `<section class="mf-timeline"><h3>Histórico do pedido</h3><ol aria-label="Histórico de etapas">${entries.map((x,i)=>`<li ${i===entries.length-1?'aria-current="step"':''}><b>${E(statusText(x.status))}</b>${x.at&&Number.isFinite(Date.parse(x.at))?`<small>${fmt.format(new Date(x.at))}</small>`:''}</li>`).join('')}</ol></section>`;
+}
+function openPendingEditor(id){
+ const o=D.orders.find(x=>String(x.id)===String(id));
+ if(!o||!canSell()||!pending(o))return toast('O pedido já saiu da fila de pendências.');
+ if(modal.open&&formDirty&&!confirm('Fechar sem salvar as alterações?'))return;
+ const f=o.data;
+ showModal('Editar pedido #MF-'+o.id,`<form class="mf-form" data-mf="edit-pending" ${orderAttrs(o)}><div class="two">
+ ${field('Data agendada','periodo_data',f.periodo_data||'','date','required')}<label>Período<select name="periodo" required><option value="">Selecione o período</option><option value="manha" ${f.periodo==='manha'?'selected':''}>Manhã · 08h–12h</option><option value="tarde" ${f.periodo==='tarde'?'selected':''}>Tarde · 13h–21h</option></select></label></div>
+ <label>Observações internas<textarea name="staff_note" rows="3" maxlength="2000">${E(o.staff_note)}</textarea></label>
+ <p class="mf-error" id="mf-form-error" hidden role="alert"></p>${footer()}</form>`);
+}
+
+function ordersRows(list){
+ return table(['Pedido / Cliente','Recebimento','Produtos',...(canSell()?['Total']:[]),'Etapa','Ações'],list.map(o=>{
+  const f=o.data;
+  return `<tr><td><div class="mf-order-person"><span class="mf-order-initial">${E(String(f.c||'?').trim().slice(0,1).toUpperCase())}</span><span><b>${E(f.c||'Cliente')}</b><small>#MF-${E(o.id)} · ${E(f.t)}</small>${sellerLine(o)}</span></div></td><td>${receiving(f)}<small>${E(schedule(f))}</small></td><td>${(f.itens||[]).slice(0,2).map(x=>`${E(x.q)}× ${E(x.n)}`).join('<br>')}${f.itens?.length>2?'<small>+ outros itens</small>':''}</td>${canSell()?`<td><b>${R(gross(o))}</b><small>${o.delivery_fee===null?'Frete a confirmar':dueTotal(o)>0?'Falta '+R(dueTotal(o)):'Recebido'}</small>${['pedidos','producao'].includes(tab)&&unpaid(o)?paymentPicker(o):''}</td>`:''}<td><div class="mf-order-actions">${orderBadge(o)}${deliveryAction(o)}</div></td><td><div class="mf-row-actions">${btn('Ver pedido','order',orderAttrs(o))}${canSell()?btn('Apagar','delete-order',orderAttrs(o)):''}</div></td></tr>`;
+ }));
+}
+function scopedOrders(){
+ if(tab==='historico')return D.orders.filter(o=>o.status==='Concluído'&&within(dayOf(o.created_at)));
+ if(tab==='producao')return D.orders.filter(o=>['Confirmado','Em produção','Pronto'].includes(o.status));
+ if(tab==='entregas')return D.orders.filter(o=>active(o)&&o.data.e==='Entrega');
+ return D.orders.filter(o=>o.status!=='Concluído'&&within(dayOf(o.created_at)));
+}
+function orders(){
+ const sales=tab==='pedidos',history=tab==='historico',base=scopedOrders(),list=orderResults(base),size=10;
+ const pages=Math.max(1,Math.ceil(list.length/size));
+ orderPage=Math.min(orderPage,pages);
+ const header=sales?`<div class="mf-sales-tools"><div class="mf-sales-summary"><span>${icon('pedidos')}<b>${base.filter(active).length}</b> em andamento</span><span>${icon('historico')}<b>${base.filter(o=>active(o)&&!o.data.periodo_data).length}</b> sem horário definido</span><span>${icon('alert')}<b>${base.filter(unpaid).length}</b> com pagamento pendente</span></div>${pendingPanel(D.orders.filter(pending))}</div>`:'';
+ const filters=(sales||history)?orderFilters():'';
+ const actions=(sales||history)&&canSell()?`<div>${btn('Limpar filtros','clear-order-filters')}${sales?btn('Links dos vendedores','seller-links'):''}${btn('Exportar CSV','export-orders',list.length?'':'disabled')}</div>`:'';
+ const pageNav=pages>1?`<div class="sf-pg"><span>Página ${orderPage} de ${pages}</span><div>${btn('Anterior','order-page',`data-page="${orderPage-1}" ${orderPage===1?'disabled':''}`)}${btn('Próxima','order-page',`data-page="${orderPage+1}" ${orderPage===pages?'disabled':''}`)}</div></div>`:'';
+ return header+`<section class="sf-orders-panel">${history?'':orderStages(base)}${filters}<div class="sf-orders-results"><span><b>${list.length}</b> ${list.length===1?'pedido encontrado':'pedidos encontrados'}</span>${actions}</div>${list.length?ordersRows(list.slice((orderPage-1)*size,orderPage*size)):empty('Nenhum pedido encontrado','Confira os filtros e o período escolhido.')}${pageNav}</section>`;
+}
+function orderFilters(){
+ const period=tab==='historico'?historyRange:range,ref=tab==='historico'?historyAnchor:anchor;
+ const fieldSelect=(label,id,choices,value)=>`<label class="sf-filter-field"><span>${label}</span><select id="${id}" aria-label="${label}">${choices.map(([k,name])=>`<option value="${k}" ${k===value?'selected':''}>${name}</option>`).join('')}</select></label>`;
+ return `<div class="sf-order-filters"><label class="sf-search">${icon('search')}<input id="mf-search" type="search" aria-label="Buscar pedidos" placeholder="Buscar código, cliente ou produto" value="${E(query)}"></label>
+ ${fieldSelect('Recebimento','mf-receive-filter',[['','Entrega e retirada'],['Entrega','Entrega'],['Retirada','Retirada']],receiveFilter)}
+ ${canSell()?fieldSelect('Pagamento','mf-payment-filter',[['','Qualquer situação'],['pending','Com saldo'],['paid','Recebido']],paymentFilter):''}
+ ${fieldSelect('Período','mf-range',[['dia','Dia'],['semana','Semana'],['mes','Mês'],['todos','Todo o período']],period)}
+ <label class="sf-filter-field"><span>Data de referência</span><input type="date" id="mf-anchor" value="${E(ref)}"></label>
+ ${fieldSelect('Ordenar','mf-order-sort',[['recent','Mais recentes'],['schedule','Data agendada'],['amount','Maior valor']].filter(([key])=>key!=='amount'||canSell()),orderSort)}</div>`;
+}
+function orderResults(base=scopedOrders()){
+ const stage=stageDefs.find(s=>s[0]===filter),q=query.trim().toLocaleLowerCase('pt-BR');
+ return base.filter(o=>(stage?stageMatch(o,stage):tab!=='pedidos'||active(o))&&(!receiveFilter||o.data.e===receiveFilter)&&
+  (!canSell()||!paymentFilter||(paymentFilter==='pending'?dueTotal(o)>0.005:dueTotal(o)<=0.005&&o.delivery_fee!=null))&&
+  (!q||[o.id,'MF-'+o.id,o.data.c,o.data.t,o.data.a,sellerName(o),...(o.data.itens||[]).map(i=>i.n)].join(' ').toLocaleLowerCase('pt-BR').includes(q)))
+ .sort((a,b)=>orderSort==='amount'&&canSell()?gross(b)-gross(a):orderSort==='schedule'?(a.data.periodo_data||'9999').localeCompare(b.data.periodo_data||'9999'):+new Date(b.created_at)-+new Date(a.created_at));
+}
+
 const publicCatalog = 'https://manaus-flores-psi.vercel.app/';
+const isStandaloneFile = /\/Painel_Manaus_Flores\.html$/i.test(location.pathname);
+const localCatalog = location.protocol === 'file:' || isStandaloneFile ? 'Manaus_Flores.html' : publicCatalog;
 const panel=$('#mf-panel'),modal=$('#mf-modal');
-const tabs={inicio:['Visão geral','◈'],pedidos:['Pedidos','▤'],producao:['Produção','✿'],entregas:['Entregas','↗'],produtos:['Produtos','♧'],estoque:['Estoque','▦'],financeiro:['Financeiro','◷'],despesas:['Despesas','↙'],clientes:['Clientes','♙'],configuracoes:['Configurações','⚙']};
+const tabs={inicio:['Painel','◈'],pedidos:['Vendas','▤'],historico:['Histórico de pedidos','◷'],producao:['Produção','✿'],entregas:['Entregas','↗'],produtos:['Catálogo','♧'],estoque:['Estoque','▦'],financeiro:['Financeiro','◷'],despesas:['Despesas','↙'],clientes:['Clientes','♙'],usuarios:['Usuários e senhas','♙'],configuracoes:['Bairros e taxas','⚙']};
 const statuses=['Novo','Confirmado','Em produção','Pronto','Em entrega','Concluído','Cancelado'];
 const ROLE_LABELS={administrador:'Administrador',vendas:'Vendas',producao:'Produção',entregador:'Entregador'};
 const ROLE_TABS={administrador:Object.keys(tabs),vendas:['pedidos','producao','entregas','produtos','estoque'],producao:['producao','entregas'],entregador:['entregas']};
 let me=null,syncVersion='',latestKnownOrder=0,syncInFlight=false,settingsDirty=false,editUser=null;
-const allowedKeys=()=>Array.isArray(me?.tabs)?me.tabs.filter(k=>tabs[k]):ROLE_TABS[me?.role]||[];
+function allowedKeys(){
+ const keys=Array.isArray(me?.tabs)?me.tabs.filter(k=>tabs[k]):ROLE_TABS[me?.role]||[];
+ const showHistory=keys.includes('pedidos')&&canSell()||keys.includes('entregas')&&me?.role==='entregador';
+ const visible=showHistory&&!keys.includes('historico')?[...keys,'historico']:keys;
+ return me?.role==='administrador'&&!visible.includes('usuarios')?[...visible,'usuarios']:visible;
+}
 const isAdmin=()=>me?.role==='administrador';
 const canSell=()=>['administrador','vendas'].includes(me?.role);
 function updateIdentity(identity){if(!identity)return;const oldRole=me?.role;me=identity;if(!allowedKeys().includes(tab)){tab=allowedKeys()[0]||'entregas';if(location.hash.startsWith('#sistema'))history.replaceState(null,'','#sistema/'+tab);}if(oldRole&&oldRole!==me.role){if(modal.open)closeModal(true);settingsDirty=false;D.products=[];D.catalog_version='';toast('Seu perfil de acesso foi atualizado.');}}
 function clearSession(){token='';authed=false;loaded=false;me=null;syncVersion='';latestKnownOrder=0;settingsDirty=false;D={products:[],orders:[],stock:[],expenses:[],receipts:[],categories:[],users:[],settings:MF_SETTINGS};if(modal.open)closeModal(true);editOrder=null;try{sessionStorage.removeItem('mf:session');}catch(_){}}
 function syncLabel(text='● Atualização automática',offline=false){const pill=$('.mf-sync',panel);if(pill){pill.textContent=text;pill.style.background=offline?'#f9e8eb':'';pill.style.color=offline?'#a54f62':'';}}
-async function synchronize(){if(syncInFlight||busy||!authed||document.hidden||!document.body.classList.contains('mf-admin'))return;syncInFlight=true;const requestToken=token;try{const state=await api('sync');if(requestToken!==token||!authed)return;updateIdentity(state.me);if(String(state.version)!==String(syncVersion)){if(settingsDirty){if(Number(state.latest_order_id)>latestKnownOrder){latestKnownOrder=Number(state.latest_order_id)||0;toast('Novo pedido recebido. Finalize suas configurações para atualizar a tela.');}syncLabel('● Novos dados disponíveis');return;}const previousLatest=latestKnownOrder;const updated=await refresh(false);if(!updated)return;if(editOrder&&modal.open&&$('form[data-mf="order"],form[data-mf="operational"]',modal)&&!D.orders.some(o=>o.id===editOrder.id)){closeModal(true);toast('Este pedido foi apagado por outro usuário.');}const focused=$('input:focus,select:focus',panel),focusId=focused?.id,focusValue=focused?.value;render();if(focusId){const next=$('#'+CSS.escape(focusId),panel);if(next){next.value=focusValue;next.focus();}}if(latestKnownOrder>previousLatest)toast('Novo pedido recebido. O painel foi atualizado.');}syncLabel();}catch(error){if(authed)syncLabel('● Reconectando…',true);}finally{syncInFlight=false;}}
+async function synchronize(){if(syncInFlight||busy||!authed||document.activeElement?.closest('.mf-pay-inline')||document.hidden||!document.body.classList.contains('mf-admin'))return;syncInFlight=true;const requestToken=token;try{const state=await api('sync');if(requestToken!==token||!authed)return;updateIdentity(state.me);if(String(state.version)!==String(syncVersion)){if(settingsDirty){if(Number(state.latest_order_id)>latestKnownOrder){latestKnownOrder=Number(state.latest_order_id)||0;toast('Novo pedido recebido. Finalize suas configurações para atualizar a tela.');}syncLabel('● Novos dados disponíveis');return;}const previousLatest=latestKnownOrder;const updated=await refresh(false);if(!updated)return;if(editOrder&&modal.open&&$('form[data-mf="order"],form[data-mf="operational"]',modal)&&!D.orders.some(o=>o.id===editOrder.id)){closeModal(true);toast('Este pedido foi apagado por outro usuário.');}const focused=$('input:focus,select:focus',panel),focusId=focused?.id,focusValue=focused?.value;render();if(focusId){const next=$('#'+CSS.escape(focusId),panel);if(next){next.value=focusValue;next.focus();}}if(latestKnownOrder>previousLatest)toast('Novo pedido recebido. O painel foi atualizado.');}syncLabel();}catch(error){if(authed)syncLabel('● Reconectando…',true);}finally{syncInFlight=false;}}
 function usersSection(){if(!isAdmin())return '';const rows=(D.users||[]).map(user=>`<tr><td><b>${E(user.name||user.username)}<\/b><small>${E(user.username)}<\/small><\/td><td>${E(ROLE_LABELS[user.role])}<\/td><td>${badge(user.active?'Ativo':'Desativado')}<\/td><td><div class="mf-row-actions">${btn('Editar','edit-user',`data-username="${E(user.username)}"`)}${user.username!=='manausflores'&&user.username!==me.username?btn(user.active?'Desativar':'Ativar','toggle-user',`data-username="${E(user.username)}" data-active="${!user.active}"`):''}<\/div><\/td><\/tr>`);return box('Controle de usuários',`<div class="mf-permissions">${Object.entries(ROLE_LABELS).map(([key,label])=>`<div><b>${E(label)}<\/b><p>${key==='administrador'?'Todas as áreas':ROLE_TABS[key].map(t=>tabs[t][0]).join(' · ')}<\/p><\/div>`).join('')}<\/div>${rows.length?table(['Usuário','Perfil','Situação','Ações'],rows):empty('Nenhum usuário')}`,btn('+ Novo usuário','new-user','',true));}
 function openUser(username){if(!isAdmin())return;editUser=(D.users||[]).find(u=>u.username===username)||null;const u=editUser||{username:'',name:'',role:'vendas',active:true},protectedOwner=u.username==='manausflores';showModal(editUser?'Editar usuário':'Novo usuário',`<form class="mf-form" data-mf="user"><div class="two">${field('Nome','name',u.name,'text','required maxlength="100"')}${field('Usuário de acesso','username',u.username,'text',`required pattern="[A-Za-z0-9_.-]{3,60}" autocomplete="off" autocapitalize="none" ${editUser?'readonly':''}`)}<\/div><label>Perfil<select name="role" ${protectedOwner?'disabled':''}>${Object.entries(ROLE_LABELS).map(([k,label])=>`<option value="${k}" ${u.role===k?'selected':''}>${label}<\/option>`).join('')}<\/select><\/label><p class="mf-hint" id="mf-role-help">${u.role==='administrador'?'Acesso a todas as áreas.':ROLE_TABS[u.role].map(k=>tabs[k][0]).join(' · ')}<\/p>${field(editUser?'Nova senha · deixe em branco para manter':'Senha · mínimo 6 caracteres','password','','password',`${editUser?'':'required'} minlength="6" maxlength="200" autocomplete="new-password"`)}<label class="mf-check"><input type="checkbox" name="active" ${u.active?'checked':''} ${protectedOwner?'disabled':''}>Usuário ativo<\/label>${protectedOwner?'<p class="mf-hint">Administrador principal. Sua senha também confirma a exclusão dos pedidos.<\/p>':''}<p class="mf-error" id="mf-form-error" hidden role="alert"><\/p>${footer()}<\/form>`);}
 function openDeleteOrder(id){if(!canSell())return;const o=D.orders.find(x=>String(x.id)===String(id));if(!o)return;if(formDirty&&modal.open&&!confirm('Descartar as alterações ainda não salvas deste pedido?'))return;showModal('Apagar pedido #MF-'+o.id,`<form class="mf-form" data-mf="delete-order" data-id="${o.id}"><p class="mf-hint">O pedido de ${E(o.data.c)} sairá do painel e dos relatórios. O administrador poderá recuperá-lo em “Pedidos apagados”.<\/p>${field('Senha do administrador principal','password','','password','required autocomplete="current-password"')}<p class="mf-error" id="mf-form-error" hidden role="alert"><\/p><div class="mf-modal-foot">${btn('Cancelar','close-modal')}<button class="mf-button primary" type="submit">Apagar pedido<\/button><\/div><\/form>`);}
 async function openDeletedOrders(){if(!isAdmin())return;const list=await api('deleted_orders');showModal('Pedidos apagados',list.length?table(['Pedido','Cliente','Apagado em',''],list.map(o=>`<tr><td>#MF-${o.id}<\/td><td>${E(o.customer)}<\/td><td>${date(o.deleted_at)}<small>${E(o.deleted_by)}<\/small><\/td><td>${btn('Restaurar','restore-order',`data-id="${o.id}"`)}<\/td><\/tr>`)):empty('Nenhum pedido apagado'));}
 function operationalStatuses(o){if(me.role==='producao'&&['Confirmado','Em produção','Pronto'].includes(o.status))return ['Confirmado','Em produção','Pronto'];if(me.role==='entregador'&&o.data.e==='Entrega'){if(o.status==='Pronto')return ['Pronto','Em entrega'];if(o.status==='Em entrega')return ['Em entrega','Concluído'];}return [];}
-function openOperationalOrder(o){editOrder=o;const f=o.data,choices=operationalStatuses(o),phone=f.rt||f.t;showModal('Pedido #MF-'+o.id,`<div class="mf-detail-grid"><p><b>Quem vai receber<\/b>${E(f.rn||f.c)}<br>${E(phone)}<\/p><p><b>Agendamento<\/b>${date(f.periodo_data)}<br>${f.periodo==='manha'?'Manhã · 08h–12h':'Tarde · 13h–21h'}<\/p><p><b>Recebimento<\/b>${E(f.e)}<br>${E(f.a||MF_SETTINGS.address)}<\/p><p><b>Situação<\/b>${badge(o.status)}${f.an?'<br>🔒 Entrega anônima':''}<\/p><\/div><div class="mf-order-items">${(f.itens||[]).map(x=>`<div>${E(x.q)}× ${E(x.n)}<\/div>`).join('')}<\/div>${f.m?`<div class="mf-note"><b>Mensagem do cartão<\/b><p style="white-space:pre-wrap;overflow-wrap:anywhere">${E(f.m)}<\/p><\/div>`:''}<div class="mf-controls">${phone?`<a class="mf-button" href="https://wa.me/${E(phoneDigits(phone))}" target="_blank" rel="noopener">Falar com quem recebe ↗<\/a>`:''}${f.e==='Entrega'?`<a class="mf-button" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f.a||'Manaus')}" target="_blank" rel="noopener">Ver endereço ↗<\/a>`:''}${btn('Imprimir pedido','print-order')}<\/div>${choices.length?`<form class="mf-form" data-mf="operational"><label>Status<select name="status">${options(choices,o.status)}<\/select><\/label><p class="mf-error" id="mf-form-error" hidden role="alert"><\/p>${footer()}<\/form>`:'<p class="mf-hint">A atualização deste status depende da etapa e do seu perfil de acesso.<\/p>'}`);}
+function openOperationalOrder(o){
+ editOrder=o;
+ const f=o.data,choices=operationalStatuses(o),phone=f.rt||f.t;
+ showModal('Pedido #MF-'+o.id,`<div class="mf-order-overview"><div class="mf-order-actions">${orderBadge(o)}${deliveryAction(o)}</div>
+ <div class="mf-detail-grid"><div><b>Quem recebe</b><p>${E(f.rn||f.c)} · ${E(phone)}</p>${f.an?'<small>Entrega anônima</small>':''}</div><div>${receiving(f,true)}<small>${E(schedule(f))}</small></div></div>
+ <div class="mf-order-items">${(f.itens||[]).map(i=>`<div>${E(i.q)}× ${E(i.n)}</div>`).join('')}</div>
+ ${f.m?`<p class="mf-order-message"><b>Cartão:</b> ${E(f.m)}</p>`:''}${orderTimeline(o)}
+ <div class="mf-row-actions">${phone?`<a class="mf-button" href="https://wa.me/${E(phoneDigits(phone))}" target="_blank" rel="noopener">Falar com quem recebe ↗</a>`:''}
+ ${f.e==='Entrega'?`<a class="mf-button" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f.a||'Manaus')}" target="_blank" rel="noopener">Ver endereço ↗</a>`:''}${btn('Imprimir pedido','print-order')}</div>
+ ${choices.length?`<details class="mf-order-settings"><summary>Atualizar etapa</summary><form class="mf-form" data-mf="operational"><label>Status<select name="status">${options(choices,o.status)}</select></label><p class="mf-error" id="mf-form-error" hidden role="alert"></p>${footer()}</form></details>`:''}</div>`,true);
+}
 function actionAllowed(action){if(['new-user','edit-user','toggle-user','deleted-orders','restore-order','backup','expense','new-expense','delete-expense'].includes(action))return isAdmin();if(['new-order','delete-order','product','new-product','delete-product','categories','delete-category','stock','new-stock','delete-stock','export-orders'].includes(action))return canSell();return true;}
 
 function toast(s){const el=$('#mf-toast');el.textContent=s;el.hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.hidden=true,5000);}
@@ -107,19 +524,20 @@ function table(head,rows){return `<div class="mf-table-wrap"><table class="mf-ta
 function btn(label,act,extra='',primary=false){return `<button type="button" class="mf-button${primary?' primary':''}" data-ma="${act}" ${extra}>${label}<\/button>`;}
 function options(a,val){return a.map(x=>`<option value="${E(x)}" ${x===val?'selected':''}>${E(x)}<\/option>`).join('');}
 function field(label,name,value='',type='text',extra=''){return `<label>${label}<input name="${name}" type="${type}" value="${E(value)}" ${extra}><\/label>`;}
-function showModal(title,content){modal.innerHTML=`<div class="mf-modal-head"><h2>${E(title)}<\/h2>${btn('✕','close-modal','aria-label="Fechar"')}<\/div><div class="mf-modal-body">${content}<\/div>`;formDirty=false;if(!modal.open)modal.showModal();}
+function showModal(title,content,compact=false){modal.classList.toggle('mf-order-compact',compact);modal.innerHTML=`<div class="mf-modal-head"><h2>${E(title)}<\/h2>${btn('✕','close-modal','aria-label="Fechar"')}<\/div><div class="mf-modal-body">${content}<\/div>`;formDirty=false;if(!modal.open)modal.showModal();}
 function closeModal(force=false){if(!force&&formDirty&&!confirm('Fechar sem salvar as alterações?'))return;modal.close();modal.innerHTML='';formDirty=false;}
 modal.addEventListener('cancel',e=>{if(formDirty&&!confirm('Fechar sem salvar as alterações?'))e.preventDefault();});
 modal.addEventListener('input',()=>formDirty=true);
 function footer(){return `<div class="mf-modal-foot">${btn('Cancelar','close-modal')}<button class="mf-button primary" type="submit">Salvar alterações<\/button><\/div>`;}
-function bounds(){let start=anchor,end=anchor;const a=new Date(anchor+'T12:00:00Z');if(range==='mes'){start=anchor.slice(0,7)+'-01';end=new Date(Date.UTC(a.getUTCFullYear(),a.getUTCMonth()+1,0)).toISOString().slice(0,10);}else if(range==='semana'){const n=(a.getUTCDay()+6)%7;a.setUTCDate(a.getUTCDate()-n);start=a.toISOString().slice(0,10);a.setUTCDate(a.getUTCDate()+6);end=a.toISOString().slice(0,10);}else if(range==='todos'){start='0000-01-01';end='9999-12-31';}return {start,end};}
+const currentRange=()=>range,currentAnchor=()=>anchor;
+function bounds(){const range=tab==='historico'?historyRange:currentRange(),anchor=tab==='historico'?historyAnchor:currentAnchor();let start=anchor,end=anchor;const a=new Date(anchor+'T12:00:00Z');if(range==='mes'){start=anchor.slice(0,7)+'-01';end=new Date(Date.UTC(a.getUTCFullYear(),a.getUTCMonth()+1,0)).toISOString().slice(0,10);}else if(range==='semana'){const n=(a.getUTCDay()+6)%7;a.setUTCDate(a.getUTCDate()-n);start=a.toISOString().slice(0,10);a.setUTCDate(a.getUTCDate()+6);end=a.toISOString().slice(0,10);}else if(range==='todos'){start='0000-01-01';end='9999-12-31';}return {start,end};}
 const within=s=>{const b=bounds();return s>=b.start&&s<=b.end;};
 const validOrders=()=>D.orders.filter(o=>o.status!=='Cancelado');
 const periodOrders=()=>validOrders().filter(o=>within(dayOf(o.created_at)));
 const dueTotal=o=>Math.max(0,number(o.net)-number(o.received));
 const gross=o=>number(o.subtotal)+number(o.delivery_fee);
 function overdue(){return validOrders().flatMap(o=>(o.installments||[]).filter(p=>!p.paid&&p.due<today()).map(p=>({o,p})));}
-function controls(includeSearch=false){const b=bounds();return `<div class="mf-controls"><select id="mf-range" aria-label="Período">${options(['dia','semana','mes','todos'],range).replace('>dia<','>Dia<').replace('>semana<','>Semana<').replace('>mes<','>Mês<').replace('>todos<','>Todo o período<')}<\/select><input type="date" id="mf-anchor" value="${anchor}" aria-label="Data de referência"><span class="mf-hint">${range==='todos'?'Todos os registros':date(b.start)+(b.end===b.start?'':' a '+date(b.end))}<\/span>${includeSearch?`<input id="mf-search" type="search" placeholder="Buscar nome, telefone ou pedido" value="${E(query)}" aria-label="Buscar">`:''}<\/div>`;}
+function controls(includeSearch=false){const b=bounds(),range=tab==='historico'?historyRange:currentRange(),anchor=tab==='historico'?historyAnchor:currentAnchor();return `<div class="mf-controls"><select id="mf-range" aria-label="Período">${options(['dia','semana','mes','todos'],range).replace('>dia<','>Dia<').replace('>semana<','>Semana<').replace('>mes<','>Mês<').replace('>todos<','>Todo o período<')}<\/select><input type="date" id="mf-anchor" value="${anchor}" aria-label="Data de referência"><span class="mf-hint">${range==='todos'?'Todos os registros':date(b.start)+(b.end===b.start?'':' a '+date(b.end))}<\/span>${includeSearch?`<input id="mf-search" type="search" placeholder="Buscar nome, telefone ou pedido" value="${E(query)}" aria-label="Buscar">`:''}<\/div>`;}
 async function refresh(renderNow=true){if(busy)return false;busy=true;const requestToken=token;try{const previous=D.products;const data=await api('all',{catalog_version:D.catalog_version||''});if(requestToken!==token||!authed)return false;D=data;if(!D.products)D.products=previous;D.receipts=D.receipts||[];D.users=D.users||[];updateIdentity(D.me);syncVersion=String(D.sync_version||'');latestKnownOrder=Number(D.latest_order_id)||0;loaded=true;applySettings(D.settings);if(renderNow)render();return true;}finally{busy=false;}}
 function applySettings(s){if(!s)return;MF_SETTINGS=Object.assign(MF_SETTINGS,s);window.dispatchEvent(new Event('mf-delivery-updated'));SF.CFG.WHATSAPP_NUMBER=s.main_phone||MF_SETTINGS.main_phone;window.SF_CONFIG.WHATSAPP_NUMBER=SF.CFG.WHATSAPP_NUMBER;
  $$('[data-wa]').forEach(a=>a.href=SF.waLink('Olá! Vim pelo site da Manaus Flores e gostaria de atendimento.'));
@@ -127,38 +545,120 @@ function applySettings(s){if(!s)return;MF_SETTINGS=Object.assign(MF_SETTINGS,s);
  $$('[data-address]').forEach(a=>a.textContent=MF_SETTINGS.address);$$('a[href^="https://www.instagram.com/"]').forEach(a=>a.href=MF_SETTINGS.instagram);const mapFrame=$('.mf-contact iframe');if(mapFrame)mapFrame.src='https://www.google.com/maps?q='+encodeURIComponent(MF_SETTINGS.address)+'&output=embed';$$('[data-map]').forEach(a=>a.href=MF_SETTINGS.map);
 }
 applySettings(MF_SETTINGS);MF_API('settings').then(applySettings).catch(()=>{});
-function login(){panel.innerHTML=`<div class="mf-login"><img src="${E($('.brand img')?.src||$('.footer__brand img')?.src)}" alt="Manaus Flores"><h1>${setup?'Crie seu acesso':'Bem-vindo à loja'}<\/h1><p>${setup?'Use o código privado de ativação e escolha seu usuário e senha.':'Acesse o painel da Manaus Flores.'}<\/p><form id="mf-login-form" class="mf-form" data-mf="${setup?'activate':'login'}">${setup?field('Código de ativação','code','','password','required autocomplete="off"'):''}${field('Usuário','username','','text','required autocomplete="username" autocapitalize="none"')}${field('Senha','password','','password',`required minlength="${setup?10:1}" autocomplete="${setup?'new-password':'current-password'}"`)}<p class="mf-error" id="mf-login-error" role="alert" hidden><\/p><button class="mf-button primary" type="submit">${setup?'Criar acesso e entrar':'Entrar no painel'}<\/button><\/form><p class="mf-hint">Peça ao administrador para criar seu acesso.<\/p><a class="mf-link" href="${E(siteUrl)}">← Voltar ao site<\/a><\/div>`;}
+function login(){panel.innerHTML=`<div class="sf-login-screen"><div class="sf-login-art"><img src="${E($('.brand img')?.src)}" alt=""><p class="sf-eyebrow">Manaus Flores e Decorações</p><h1>Cuidado em<br>cada detalhe.</h1></div><div class="mf-login sf-login"><span class="sf-login-form-title">Área da equipe</span><h1>${setup?'Crie seu acesso':'Bem-vindo à loja'}<\/h1><p>${setup?'Use o código privado de ativação e escolha seu usuário e senha.':'Acesse o painel da Manaus Flores.'}<\/p><form id="mf-login-form" class="mf-form" data-mf="${setup?'activate':'login'}">${setup?field('Código de ativação','code','','password','required autocomplete="off"'):''}${field('Usuário','username','','text','required autocomplete="username" autocapitalize="none"')}${field('Senha','password','','password',`required minlength="${setup?10:1}" autocomplete="${setup?'new-password':'current-password'}"`)}<p class="mf-error" id="mf-login-error" role="alert" hidden><\/p><button class="mf-button primary" type="submit">${setup?'Criar acesso e entrar':'Entrar no painel'}<\/button><\/form><p class="mf-hint">Peça ao administrador para criar seu acesso.<\/p><a class="mf-link" href="${E(localCatalog)}">← Voltar ao site<\/a><\/div><\/div>`;}
 async function route(){const on=location.hash.startsWith('#sistema');document.body.classList.toggle('mf-admin',on);panel.hidden=!on;if(!on)return;$$('#storefront dialog[open]').forEach(d=>d.close());
- const next=location.hash.split('/')[1]||'inicio';tab=tabs[next]?next:'inicio';query='';filter='';
+ const next=location.hash.split('/')[1]||'inicio';tab=tabs[next]?next:'inicio';query='';filter='';pendingOpen=false;menuOpen=false;orderPage=1;receiveFilter='';paymentFilter='';orderSort='recent';if(tab==='pedidos'&&dashboardStage)filter=dashboardStage;dashboardStage='';
  if(!authed){if(!token)return login();panel.innerHTML=empty('Conectando…','Validando seu acesso.');try{updateIdentity(await api('session'));authed=true;}catch(e){login();return;}}
  if(!allowedKeys().includes(tab)){tab=allowedKeys()[0]||'entregas';history.replaceState(null,'','#sistema/'+tab);}
  if(loaded&&tab==='produtos'&&!D.catalog_version){try{await refresh(false);}catch(e){toast(message(e));}}
  if(!loaded){panel.innerHTML=empty('Abrindo seu painel…');try{await refresh(false);}catch(e){panel.innerHTML=empty('Não foi possível carregar',message(e))+btn('Tentar novamente','refresh');return;}}
  render();
 }
-function render(){if(!authed)return login();if(!allowedKeys().includes(tab))tab=allowedKeys()[0]||'entregas';panel.innerHTML=`<div class="mf-shell"><aside class="mf-aside"><div class="mf-aside-brand"><img src="${E($('.brand img')?.src)}" alt="Manaus Flores"><div>Manaus Flores<small>${E(ROLE_LABELS[me?.role]||'PAINEL DA LOJA')}<\/small><\/div><\/div><nav class="mf-nav" aria-label="Painel">${Object.entries(tabs).filter(([key])=>allowedKeys().includes(key)).map(([k,[name,icon]])=>`<button type="button" data-ma="nav" data-tab="${k}" class="${tab===k?'active':''}" ${tab===k?'aria-current="page"':''}><i aria-hidden="true">${icon}<\/i>${name}<\/button>`).join('')}<\/nav><div class="mf-aside-bottom"><a href="${E(siteUrl)}">↗ Ver site da loja<\/a><button class="mf-button" data-ma="logout">Sair da conta<\/button><small>Horário de Manaus · UTC−4<\/small><\/div><\/aside><div class="mf-work"><header class="mf-top"><div><h1>${tabs[tab][0]}<\/h1><p>Manaus Flores e Decorações · ${date(today())}<\/p><\/div><div class="mf-top-actions"><span class="mf-pill mf-sync">● Atualização automática<\/span>${btn('↻','refresh','aria-label="Atualizar dados"')}${btn('↗ Site','visit')}${btn('Sair','logout')}<\/div><\/header><div id="mf-view">${({inicio:dashboard,pedidos:orders,producao:orders,entregas:orders,produtos:productsView,estoque:stockView,financeiro:finance,despesas:expensesView,clientes:clientsView,configuracoes:settingsView}[tab])()}<\/div><\/div><\/div>`;}
+const iconPaths={
+ menu:'M4 6h16M4 12h16M4 18h16', close:'m6 6 12 12M6 18 18 6', plus:'M12 5v14M5 12h14',
+ inicio:'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z', pedidos:'M7 3h10l3 4v14H4V7l3-4M4 7h16M9 11a3 3 0 0 0 6 0',
+ historico:'M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0', producao:'M12 9c-7-11-14 1-3 4-10 5-1 14 3 3 5 10 13 0 3-3 10 4 7-8-3-4M12 9v7',
+ entregas:'M3 6h11v11H3zM14 10h4l3 4v3h-7M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4M18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4',
+ estoque:'M3 7l9-4 9 4v10l-9 4-9-4zm0 0 9 4 9-4m-9 4v10', financeiro:'M3 5h18v14H3zM3 9h18m-6 5h3',
+ despesas:'M6 3h12v18l-6-3-6 3zM9 8h6m-6 4h6', produtos:'M4 3h16v18H4zM8 7h8m-8 5h8m-8 5h5',
+ clientes:'M16 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 21a8 8 0 0 1 16 0',
+ usuarios:'M5 10h14v11H5zM8 10V6a4 4 0 0 1 8 0v4m-4 4v3',
+ configuracoes:'M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0zM14.5 10a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0',
+ refresh:'M20 7a9 9 0 1 0 1 7m-1-10v5h-5', visit:'M13 5h6v6m0-6-8 8m6 0v6H5V7h6',
+ logout:'M10 4H5v16h5m4-12 4 4-4 4m-5-4h9', theme:'M21 13a9 9 0 1 1-10-10 7 7 0 0 0 10 10z',
+ arrow:'M5 12h14m-6-6 6 6-6 6', search:'M16 16l5 5m-3-10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',
+ alert:'M12 3 2 21h20zM12 9v5m0 3v.5'
+};
+const icon=key=>`<svg class="sf-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="${iconPaths[key]||iconPaths.pedidos}"></path></svg>`;
+const navGroups=[['Operação',['inicio','pedidos','historico','producao','entregas','estoque']],['Gestão',['financeiro','despesas','clientes']],['Sistema',['produtos','usuarios','configuracoes']]];
+const subtitles={inicio:'Visão geral da operação, alertas e movimento da loja',pedidos:'Controle de pedidos, pagamentos e contatos pendentes',historico:'Consulte entregas e retiradas concluídas',producao:'Fila de produção e pedidos prontos',entregas:'Acompanhe rotas e confirmações de entrega',estoque:'Controle de flores, embalagens e materiais',financeiro:'Vendas, recebimentos e saldo do período',despesas:'Acompanhe os lançamentos da loja',clientes:'Contatos e histórico de compras',produtos:'Produtos exibidos no catálogo',usuarios:'Acessos e perfis da equipe',configuracoes:'Gerencie bairros atendidos e taxas de entrega'};
+const compactPage=()=>tab==='pedidos';
+let dashboardStage='',menuOpen=false,orderPage=1,receiveFilter='',paymentFilter='',orderSort='recent',dark=false;
+try{dark=localStorage.getItem('mf:theme')==='dark';}catch(_){}
+function setMenu(open,restore=false){
+ menuOpen=open;
+ $('[data-ma="menu-toggle"]',panel)?.setAttribute('aria-expanded',String(open));
+ $('.sf-shell',panel)?.classList.toggle('open',open);
+ if(open&&matchMedia('(max-width:900px)').matches)$('.mf-nav button.active',panel)?.focus();
+ if(restore)$('[data-ma="menu-toggle"]',panel)?.focus();
+}
+function render(){
+ if(!authed)return login();
+ if(!allowedKeys().includes(tab))tab=allowedKeys()[0]||'entregas';
+ const keys=allowedKeys(),name=me.name||me.username||'Equipe',role=ROLE_LABELS[me.role],title=tabs[tab][0],sales=compactPage();
+ const initials=name.trim().split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();
+ const nav=navGroups.map(([group,items])=>{
+  const visible=items.filter(k=>keys.includes(k));
+  if(!visible.length)return '';
+  return `<p class="sf-sg">${group}</p>${visible.map(k=>{
+   const count=k==='pedidos'?D.orders.filter(active).length:k==='producao'?D.orders.filter(o=>['Confirmado','Em produção'].includes(o.status)).length:k==='entregas'?D.orders.filter(o=>o.data.e==='Entrega'&&['Pronto','Em entrega'].includes(o.status)).length:0;
+   return `<button type="button" data-ma="nav" data-tab="${k}" class="${k===tab?'active on':''}" ${k===tab?'aria-current="page"':''}>${icon(k)}<span>${tabs[k][0]}</span>${count?`<em>${count}</em>`:''}</button>`;
+  }).join('')}`;
+ }).join('');
+ panel.classList.toggle('sf-dark',dark);
+ document.body.classList.toggle('mf-dark',dark);
+ panel.innerHTML=`<header class="sf-h"><button type="button" class="sf-icon-button sf-hb" data-ma="menu-toggle" aria-controls="mf-sidebar" aria-expanded="${menuOpen}" aria-label="Abrir menu">${icon('menu')}</button><span class="sf-header-title">Gestão da floricultura</span><div id="sf-sync" role="status"><i></i><span class="mf-sync">● Atualização automática</span></div>
+ ${topButton('refresh','Atualizar dados')}<a class="sf-site-link" href="${E(publicCatalog)}" target="_blank" rel="noopener" aria-label="Abrir catálogo">${icon('visit')}<span>Catálogo</span></a>
+ ${topButton('theme',dark?'Ativar tema claro':'Ativar tema escuro')}<div class="sf-user"><b>${E(initials)}</b><div>${E(name)}<small>${E(role)}</small></div></div>${topButton('logout','Sair da conta')}</header>
+ <div class="sf-shell${menuOpen?' open':''}"><aside class="sf-sb" id="mf-sidebar" aria-label="Menu do painel"><div class="sf-side-brand"><img src="${E($('.brand img')?.src)}" alt=""><div><b>Manaus Flores</b><small>Gestão da loja</small></div></div><div class="sf-side-label">ÁREA DE TRABALHO</div><nav class="mf-nav" aria-label="Áreas do painel">${nav}</nav><div class="sf-side-footer">Manaus · UTC−4</div></aside>
+ <button class="sf-sbx" type="button" data-ma="menu-close" aria-label="Fechar menu"></button>
+ <div class="sf-c${sales?' mf-sales-main':''}"><div class="sf-page-head${sales?' mf-sales-head':''}"><div>${sales?'':`<p class="sf-eyebrow">Gestão da loja <span>/ ${E(title)}</span></p>`}<h1>${E(title)}</h1><p>${E(subtitles[tab])}</p></div>${canSell()?btn(icon('plus')+'Novo pedido','new-order','',true):''}</div>
+ <div id="mf-view">${views[tab]()}</div><footer class="sf-page-footer"><span>Manaus Flores · Gestão</span><span>${date(today())}</span></footer></div></div>`;
+}
+function topButton(action,label){
+ return `<button class="sf-icon-button" type="button" data-ma="${action}" aria-label="${E(label)}" title="${E(label)}">${icon(action)}</button>`;
+}
+const views={inicio:dashboard,pedidos:orders,historico:orders,producao:orders,entregas:orders,produtos:productsView,estoque:stockView,financeiro:finance,despesas:expensesView,clientes:clientsView,usuarios:usersView,configuracoes:settingsView};
+function usersView(){
+ if(!isAdmin())return empty('Acesso restrito');
+ return usersSection()+box('Acesso e registros',`<div class="mf-admin-actions">${btn('Exportar backup JSON','backup')}${btn('Alterar minha senha','password')}${btn('Pedidos apagados','deleted-orders')}</div>`);
+}
 function sellerName(order) {
   // The existing order API keeps the request ID available to staff with sales access.
-  const slug = /^mf-(paulo|rafaela|railson):/.exec(order.request_id || '')?.[1];
-  return slug ? MF_SELLERS[slug].name : '';
+  const slug = /^mf-([a-z]+):/.exec(order.request_id || order.data?.request_id || '')?.[1];
+  return slug && Object.hasOwn(MF_SELLERS, slug) ? MF_SELLERS[slug].name : '';
 }
 function sellerLine(order) {
   const name = sellerName(order);
   return name ? `<small>Atendimento: ${E(name)}</small>` : '';
 }
+function sellerCatalogUrl(base, slug) {
+  const url = new URL(base, location.href);
+  url.hash = '';
+  url.searchParams.set('vendedor', slug);
+  return url.href;
+}
 function showSellerLinks() {
   const fields = Object.entries(MF_SELLERS).map(([slug, seller]) => {
-    const url = new URL(publicCatalog);
-    url.search = '';
-    url.hash = '';
-    url.searchParams.set('vendedor', slug);
-    return `<div class="two"><label>${E(seller.name)}<input type="url" readonly value="${E(url.href)}"></label>${btn('Copiar link de ' + seller.name, 'copy-seller-link')}</div>`;
+    const shareUrl = sellerCatalogUrl(publicCatalog, slug);
+    const previewUrl = sellerCatalogUrl(localCatalog, slug);
+    const preview = shareUrl === previewUrl ? '' : ` <a class="mf-button" href="${E(previewUrl)}" target="_blank" rel="noopener">Abrir teste de ${E(seller.name)}</a>`;
+    return `<div class="two"><label>${E(seller.name)} · +${E(seller.phone)}<input type="url" readonly value="${E(shareUrl)}"></label><div class="mf-row-actions">${btn('Copiar link de ' + seller.name, 'copy-seller-link')}${preview}</div></div>`;
   }).join('');
-  showModal('Links dos vendedores', `<div class="mf-form"><p class="mf-hint">Compartilhe o link do vendedor no WhatsApp. O cliente monta o pedido e volta para o atendimento da mesma pessoa.</p>${fields}</div>`);
+  showModal('Links dos vendedores', `<div class="mf-form"><p class="mf-hint">Compartilhe o link do vendedor quando esta versão estiver no endereço do catálogo. O pedido será encaminhado para o mesmo vendedor.</p>${fields}</div>`);
 }
-function ordersRows(list){return table(['Pedido / Cliente','Agendamento','Produtos',...(canSell()?['Total']:[]),'Status',''],list.map(o=>`<tr><td><b>#MF-${o.id}<\/b><small>${E(o.data.c)} · ${E(o.data.t)}<\/small>${sellerLine(o)}<\/td><td>${date(o.data.periodo_data)}<small>${o.data.periodo==='manha'?'Manhã · 08h–12h':'Tarde · 13h–21h'} · ${E(o.data.e)}<\/small><\/td><td>${(o.data.itens||[]).slice(0,2).map(x=>`${E(x.q)}× ${E(x.n)}`).join('<br>')}${o.data.itens?.length>2?'<small>+ outros itens<\/small>':''}<\/td>${canSell()?`<td>${R(gross(o))}<small>${o.delivery_fee===null?'Frete a confirmar':dueTotal(o)>0?'Falta '+R(dueTotal(o)):'Recebido'}<\/small><\/td>`:''}<td>${badge(o.status)}<\/td><td><div class="mf-row-actions">${btn('Ver pedido','order',`data-id="${o.id}"`)}${canSell()?btn('Apagar','delete-order',`data-id="${o.id}"`):''}<\/div><\/td><\/tr>`));}
-function dashboard(){const os=periodOrders(),sold=os.reduce((s,o)=>s+gross(o),0),cash=D.receipts.filter(x=>within(x.day)).reduce((s,x)=>s+number(x.amount),0),pending=validOrders().filter(o=>!['Concluído'].includes(o.status)),low=D.stock.filter(x=>+x.quantity<=+x.minimum);return controls()+`<div class="mf-cards">${metric('Vendas no período',R(sold),os.length+' pedidos')}${metric('Entradas no período',R(cash),'Valores efetivamente recebidos')}${metric('Em andamento',pending.length,'Novos, produção e entregas')}${metric('A receber',R(validOrders().reduce((s,o)=>s+dueTotal(o),0)),overdue().length+' parcelas vencidas')}<\/div>`+box('Pedidos mais recentes',D.orders.length?ordersRows(D.orders.slice(0,6)):empty('Sua loja está pronta','Pedidos finalizados no site aparecerão aqui.'),btn('+ Venda manual','new-order','',true))+`<div class="mf-two">${box('Agenda de hoje',validOrders().filter(o=>o.data.periodo_data===today()).length?'<div class="mf-list">'+validOrders().filter(o=>o.data.periodo_data===today()).map(o=>`<div class="mf-list-row"><span><b>#MF-${o.id}<\/b> · ${E(o.data.c)}<br>${E(o.data.e)} · ${o.data.periodo==='manha'?'Manhã':'Tarde'}<\/span>${badge(o.status)}<\/div>`).join('')+'<\/div>':empty('Agenda livre','Nenhum pedido agendado para hoje.'))}${box('Atenção da loja','<div class="mf-list"><div class="mf-list-row"><span>Parcelas vencidas<\/span><b>'+overdue().length+'<\/b><\/div><div class="mf-list-row"><span>Itens no estoque mínimo<\/span><b>'+low.length+'<\/b><\/div><div class="mf-list-row"><span>Produtos cadastrados<\/span><b>'+D.products.length+'<\/b><\/div><\/div>')}<\/div>`;}
-function orders(){let list=D.orders.filter(o=>within(dayOf(o.created_at)));if(tab==='producao')list=validOrders().filter(o=>['Confirmado','Em produção','Pronto'].includes(o.status));if(tab==='entregas')list=validOrders().filter(o=>o.data.e==='Entrega'&&(filter||o.status!=='Concluído'));if(filter)list=list.filter(o=>o.status===filter);if(query){const q=query.toLowerCase();list=list.filter(o=>(o.id+' '+o.data.c+' '+o.data.t+' '+o.data.a).toLowerCase().includes(q));}return (tab==='pedidos'?controls(true):`<p class="mf-note">${tab==='producao'?'Pedidos confirmados, em produção e prontos para envio.':'Entregas com dia e período definidos pelo cliente.'}<\/p>`)+`<div class="mf-controls"><select id="mf-status-filter" aria-label="Status do pedido"><option value="">Todos os status<\/option>${options(tab==='producao'?['Confirmado','Em produção','Pronto']:statuses,filter)}<\/select>${canSell()?btn('+ Venda manual','new-order','',true)+btn('Exportar CSV','export-orders')+btn('Links dos vendedores','seller-links'):''}<\/div>`+box(list.length+' pedidos',list.length?ordersRows(list):empty('Nenhum pedido encontrado','Altere o período ou aguarde um novo pedido.'));}
+
+function dashboard(){
+ const os=periodOrders(),sold=os.reduce((s,o)=>s+gross(o),0);
+ const cash=D.receipts.filter(x=>within(x.day)).reduce((s,x)=>s+number(x.amount),0);
+ const working=D.orders.filter(active),unsettled=validOrders().reduce((s,o)=>s+dueTotal(o),0);
+ const upcoming=working.filter(o=>o.data.periodo_data&&o.data.periodo_data>=today()).sort((a,b)=>a.data.periodo_data.localeCompare(b.data.periodo_data)||(a.data.periodo==='manha'?-1:1)-(b.data.periodo==='manha'?-1:1)).slice(0,3);
+ const days=Array.from({length:7},(_,i)=>{
+  const d=new Date(today()+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+i-6);
+  const key=d.toISOString().slice(0,10);
+  return {label:key.slice(-2),count:validOrders().filter(o=>dayOf(o.created_at)===key).length};
+ });
+ const peak=Math.max(1,...days.map(d=>d.count));
+ return `<div class="sf-overview"><section class="sf-welcome"><span>${icon('producao')} MANAUS FLORES</span><h2>Sua operação,<br>em boas mãos.</h2><p>${working.length} ${working.length===1?'pedido em andamento':'pedidos em andamento'}.</p><button type="button" data-ma="nav" data-tab="pedidos">Acompanhar pedidos ${icon('arrow')}</button></section>
+ <section class="sf-agenda"><div class="sf-section-title"><h2>Próximas entregas e retiradas</h2>${icon('historico')}</div>${upcoming.length?upcoming.map(o=>`<button type="button" data-ma="order" ${orderAttrs(o)}><span class="sf-agenda-time">${date(o.data.periodo_data).slice(0,5)}<small>${o.data.periodo==='manha'?'Manhã':'Tarde'}</small></span><span><b>${E(o.data.c)}</b><small>${E(o.data.e)}</small></span>${icon('arrow')}</button>`).join(''):empty('Agenda livre','Os próximos pedidos aparecerão aqui.')}</section></div>
+ ${controls()}<div class="sf-kc">${dashboardMetric('pedidos','Pedidos em andamento',working.length)}${dashboardMetric('financeiro','Vendas no período',R(sold))}${dashboardMetric('financeiro','Entradas no período',R(cash))}${dashboardMetric('alert','A receber',R(unsettled))}</div>
+ <div class="sf-analytics"><section class="sf-chart"><div class="sf-section-title"><h2>Movimento de pedidos</h2><small>Últimos 7 dias</small></div><div class="mf-activity-bars">${days.map(d=>`<div><b>${d.count}</b><i style="--bar:${d.count/peak*100}%"></i><small>${d.label}</small></div>`).join('')}</div></section><section class="sf-chart"><div class="sf-section-title"><h2>Fluxo da operação</h2></div>${stageDefs.map(s=>`<button class="sf-stage-line" data-ma="dashboard-stage" data-stage="${s[0]}"><span class="sf-stage-dot"></span><span>${E(s[1])}</span><b>${D.orders.filter(o=>stageMatch(o,s)).length}</b>${icon('arrow')}</button>`).join('')}</section></div>
+ ${box('Pedidos recentes',D.orders.length?ordersRows(D.orders.slice(0,6)):empty('Nenhum pedido recebido'))}`;
+}
+function dashboardMetric(key,label,value){
+ return `<div class="kc"><span class="ki">${icon(key)}</span><div><small>${E(label)}</small><b>${E(value)}</b></div></div>`;
+}
+
 function productsView(){const q=query.toLowerCase(),list=D.products.filter(p=>(p.name+' '+p.category).toLowerCase().includes(q));return `<div class="mf-controls"><input type="search" id="mf-search" value="${E(query)}" placeholder="Buscar produto ou categoria" aria-label="Buscar produto">${btn('+ Novo produto','new-product','',true)}${btn('Categorias','categories')}<span class="mf-hint">${D.products.length} produtos · alterações aparecem em outros dispositivos<\/span><\/div><div class="mf-products">${list.map(p=>`<article class="mf-pcard"><img src="${E(p.main_image)}" alt="${E(p.name)}" loading="lazy"><div class="mf-pcopy"><h3>${E(p.name)}<\/h3><p>${E(p.category)} · ${!p.active?'Oculto':p.available?'Disponível':'Indisponível'}<\/p><footer><b>${R(p.price)}<\/b>${btn('✎ Editar','product',`data-id="${E(p.id)}"`)}<\/footer><\/div><\/article>`).join('')}<\/div>${!list.length?empty('Nenhum produto'):''}`;}
 function stockView(){return `<div class="mf-controls">${btn('+ Adicionar item','new-stock','',true)}<span class="mf-hint">Controle manual de flores, embalagens e materiais.<\/span><\/div>`+box('Materiais e insumos',D.stock.length?table(['Item','Quantidade','Mínimo','Situação',''],D.stock.map(x=>`<tr><td>${E(x.name)}<\/td><td>${E(x.quantity)} ${E(x.unit)}<\/td><td>${E(x.minimum)} ${E(x.unit)}<\/td><td>${badge(+x.quantity<=+x.minimum?'Pendente':'Disponível')}<\/td><td>${btn('Editar','stock',`data-id="${E(x.id)}"`)}<\/td><\/tr>`)):empty('Cadastre seus materiais','Acompanhe quantidades e receba destaques de estoque baixo.'));}
 function finance(){const os=periodOrders(),income=D.receipts.filter(x=>within(x.day)),costs=D.expenses.filter(x=>within(x.day)),cash=income.reduce((s,x)=>s+number(x.amount),0),spent=costs.reduce((s,x)=>s+number(x.amount),0),owed=validOrders().reduce((s,o)=>s+dueTotal(o),0);let days={};income.forEach(x=>days[x.day]=(days[x.day]||0)+number(x.amount));const max=Math.max(1,...Object.values(days));return controls()+`<div class="mf-cards">${metric('Entradas reais',R(cash),'Recebimentos pelas datas registradas')}${metric('Despesas',R(spent),costs.length+' lançamentos')}${metric('Saldo do período',R(cash-spent),'Entradas menos despesas')}${metric('A receber',R(owed),'Saldo de todos os pedidos ativos')}<\/div><div class="mf-two">${box('Entradas por dia',Object.keys(days).length?'<div class="mf-list">'+Object.entries(days).sort().map(([d,n])=>`<div class="mf-list-row" style="display:block"><span>${date(d)} <b style="float:right">${R(n)}<\/b><\/span><div class="mf-progress"><i style="width:${Math.max(0,n/max*100)}%"><\/i><\/div><\/div>`).join('')+'<\/div>':empty('Sem entradas neste período'))}${box('Parcelas vencidas',overdue().length?'<div class="mf-list">'+overdue().map(({o,p})=>`<div class="mf-list-row"><span>${E(o.data.c)} · #MF-${o.id}<br><small>${date(p.due)} · ${R(p.amount)}<\/small><\/span>${btn('Ver pedido','order',`data-id="${o.id}"`)}<\/div>`).join('')+'<\/div>':empty('Nenhuma parcela vencida','Os vencimentos são destacados automaticamente.'))}<\/div>`+box('Movimentações',income.length?table(['Data','Pedido','Descrição','Valor'],income.slice().reverse().map(x=>`<tr><td>${date(x.day)}<\/td><td>#MF-${x.order_id}<\/td><td>${E(x.note||'Recebimento')}<\/td><td>${R(x.amount)}<\/td><\/tr>`)):empty('Nenhuma movimentação registrada'))+`<p class="mf-hint">O valor líquido esperado e os recebimentos são definidos em “Ver pedido”. O saldo não inclui valores ainda a receber. Custos de produção só entram no saldo quando lançados em Despesas.<\/p>`;}
@@ -169,7 +669,7 @@ function deliveryFeesView(){const entries=MF_DELIVERY.names.map(n=>[n,MF_DELIVER
 function collectDeliveryRows(f){return $$('[data-neighborhood]',f).map(row=>[row.dataset.neighborhood,$('input',row).value]);}
 function filterDeliveryRows(f){const q=MF_DELIVERY.norm($('#mf-fee-search',f).value);let count=0;$$('[data-fee-row]',f).forEach(row=>{row.hidden=!row.dataset.feeRow.includes(q);if(!row.hidden)count++;});$('#mf-fee-count',f).textContent=count+' bairros';}
 document.addEventListener('click',e=>{const add=e.target.closest('[data-fee-add]'),remove=e.target.closest('[data-fee-remove]');if(!add&&!remove)return;if(!isAdmin())return;const f=e.target.closest('form[data-mf="delivery-fees"]');if(!f)return;const entries=collectDeliveryRows(f),error=$('#mf-form-error',f);try{if(add){const input=$('#mf-new-neighborhood',f),n=input.value.trim().replace(/\s+/g,' '),value=$('#mf-new-neighborhood-fee',f).value,amount=Number(value);if(!n||n.length>80||!MF_DELIVERY.norm(n)||/[\u0000-\u001f\u007f]/.test(n))throw new Error('Informe um nome válido para o bairro.');if(entries.some(([x])=>MF_DELIVERY.norm(x)===MF_DELIVERY.norm(n)))throw new Error('Este bairro já está cadastrado.');if(value===''||!Number.isFinite(amount)||amount<0||amount>99999.99)throw new Error('Informe uma taxa válida para o novo bairro.');if(entries.length>=1000)throw new Error('O limite é de 1.000 bairros.');entries.push([n,number(amount).toFixed(2)]);entries.sort((a,b)=>a[0].localeCompare(b[0],'pt-BR'));input.value='';$('#mf-new-neighborhood-fee',f).value='20.00';$('#mf-fee-search',f).value='';}else{const row=remove.closest('[data-neighborhood]');if(!confirm('Apagar o bairro '+row.dataset.neighborhood+' da lista de entregas? A mudança será aplicada ao salvar.'))return;entries.splice(entries.findIndex(([n])=>n===row.dataset.neighborhood),1);}$('.mf-fee-grid',f).innerHTML=deliveryFeeRows(entries);filterDeliveryRows(f);settingsDirty=true;error.hidden=true;}catch(ex){error.textContent=ex.message;error.hidden=false;}});
-function settingsView(){if(!isAdmin())return empty('Acesso restrito');const s=D.settings;return `<div class="mf-two">${box('Contatos e localização',`<form class="mf-form" data-mf="settings" style="padding:22px">${field('WhatsApp geral da loja','main_phone',s.main_phone,'tel','required')}${field('Link do Railson','railson',s.railson,'url','required')}${field('Link do Paulo','paulo',s.paulo,'url','required')}${field('Endereço','address',s.address,'text','required')}${field('Localização no Google Maps','map',s.map,'url','required')}${field('Instagram','instagram',s.instagram,'url','required')}<button class="mf-button primary">Salvar configurações<\/button><\/form>`)}${box('Acesso e backup',`<div style="padding:22px"><p class="mf-hint" style="margin-bottom:18px">Os dados ficam sincronizados no Supabase. Faça uma cópia para manter um backup dos registros da loja.<\/p><div class="mf-form">${btn('Exportar backup JSON','backup')}${btn('Alterar minha senha','password')}${btn('Pedidos apagados','deleted-orders')}<p class="mf-hint">O arquivo público do site não contém senha administrativa.<\/p><\/div><\/div>`)}<\/div>${deliveryFeesView()}${usersSection()}`;}
+function settingsView(){return isAdmin()?deliveryFeesView():empty('Acesso restrito');}
 function phoneDigits(s){let d=String(s||'').replace(/\D/g,'');return d.length<=11?'55'+d:d;}
 function openProduct(id){editProduct=D.products.find(x=>x.id===id)||{id:'mf-'+crypto.randomUUID(),name:'',price:'',description:'',observation:'',category:D.categories[0]||'Rosas',main_image:'',gallery_images:[],available:true,active:true,sort_order:D.products.length,stock:null};editImages=[editProduct.main_image,...editProduct.gallery_images].filter(Boolean);const p=editProduct;showModal(p.name?'Editar produto':'Novo produto',`<form class="mf-form" data-mf="product">${field('Nome do produto','name',p.name,'text','required maxlength="200"')}<div class="two">${field('Preço (R$)','price',p.price,'number','required min="0" step="0.01"')}<label>Categoria<select name="category">${options([...new Set([...D.categories,p.category])],p.category)}<\/select><\/label><\/div><label>Descrição<textarea name="description" rows="3">${E(p.description)}<\/textarea><\/label><label>Observações e cores<textarea name="observation" rows="3">${E(p.observation)}<\/textarea><\/label><label>Fotos · a primeira é a principal<input type="file" id="mf-image-files" accept="image/*" multiple><\/label><div class="mf-gallery-edit" id="mf-image-list"><\/div><div class="two">${field('URL de imagem (opcional)','image_url','','url')}${btn('Adicionar URL','image-url')}<\/div><label>Colar imagem<input id="mf-paste-image" type="text" placeholder="Clique aqui e cole a foto (Ctrl+V)"><\/label><div class="two"><label class="mf-check"><input type="checkbox" name="available" ${p.available?'checked':''}>Disponível para pedidos<\/label><label class="mf-check"><input type="checkbox" name="active" ${p.active?'checked':''}>Visível no catálogo<\/label><\/div>${p.name?btn('Excluir produto','delete-product',`data-id="${E(p.id)}"`):''}${footer()}<\/form>`);renderImages();}
 function renderImages(){$('#mf-image-list').innerHTML=editImages.map((u,i)=>`<div><img src="${E(u)}" alt="Foto ${i+1}"><button type="button" data-ma="remove-image" data-i="${i}" aria-label="Remover foto ${i+1}">×<\/button><\/div>`).join('');}
@@ -179,7 +679,15 @@ function openCategories(){showModal('Categorias',`<form class="mf-form" data-mf=
 function openStock(id){const x=D.stock.find(x=>x.id===id)||{};showModal(x.id?'Editar estoque':'Adicionar material',`<form class="mf-form" data-mf="stock"><input type="hidden" name="id" value="${E(x.id||'')}">${field('Nome do material','name',x.name,'text','required')}<div class="two">${field('Quantidade atual','quantity',x.quantity??0,'number','required min="0" step="0.01"')}${field('Estoque mínimo','minimum',x.minimum??0,'number','required min="0" step="0.01"')}<\/div>${field('Unidade (un, maço, metro…)','unit',x.unit||'un','text','required')}${x.id?btn('Excluir item','delete-stock',`data-id="${x.id}"`):''}${footer()}<\/form>`);}
 function openExpense(id){const x=D.expenses.find(x=>x.id===id)||{};showModal(x.id?'Editar despesa':'Nova despesa',`<form class="mf-form" data-mf="expense"><input type="hidden" name="id" value="${E(x.id||'')}">${field('Descrição','name',x.name,'text','required')}<div class="two">${field('Data','day',x.day||today(),'date','required')}${field('Valor (R$)','amount',x.amount,'number','required min="0.01" step="0.01"')}<\/div><label>Categoria<select name="category">${options(['Flores','Embalagens','Entregas','Equipe','Aluguel','Serviços','Outros'],x.category||'Flores')}<\/select><\/label>${x.id?btn('Excluir despesa','delete-expense',`data-id="${x.id}"`):''}${footer()}<\/form>`);}
 function installmentRow(p={amount:'',due:today(),paid:false},i=0){return `<div class="mf-installment"><label>Valor (R$)<input name="inst-amount" type="number" min="0.01" step="0.01" required value="${E(p.amount)}"><\/label><label>Vencimento<input name="inst-due" type="date" required value="${E(p.due)}"><\/label><label class="mf-check"><input name="inst-paid" type="checkbox" ${p.paid?'checked':''}>Paga<\/label><button type="button" class="mf-button" data-ma="remove-installment" aria-label="Remover parcela">×<\/button><\/div>`;}
-function openOrder(id){const o=D.orders.find(x=>String(x.id)===String(id));if(!o)return;if(!canSell())return openOperationalOrder(o);editOrder=o;const f=o.data;showModal('Pedido #MF-'+o.id,`<div class="mf-detail-grid"><p><b>Cliente<\/b>${E(f.c)}<br>${E(f.t)}${sellerLine(o)}<\/p><p><b>Quem vai receber<\/b>${E(f.rn||f.c)}<br>${E(f.rt||f.t)}${f.an?'<br>🔒 Entrega anônima':''}<\/p><p><b>Recebimento<\/b>${E(f.e)}<br>${E(f.a||MF_SETTINGS.address)}<\/p><p><b>Pagamento escolhido<\/b>${E(f.p)}<br>Criado em ${date(o.created_at)}<\/p><\/div><div class="mf-order-items">${(f.itens||[]).map(x=>`<div>${E(x.q)}× ${E(x.n)} <b style="float:right">${R(x.q*x.p)}<\/b><\/div>`).join('')}<b>Produtos: ${R(o.subtotal)}<\/b><\/div>${f.m?`<div class="mf-note"><b>Mensagem do cartão<\/b><p style="white-space:pre-wrap;overflow-wrap:anywhere">${E(f.m)}<\/p><\/div>`:''}<div class="mf-controls"><a class="mf-button" href="https://wa.me/${E(phoneDigits(f.t))}?text=${encodeURIComponent('Olá, '+f.c+'! Vamos conversar sobre seu pedido #MF-'+o.id+' na Manaus Flores?')}" target="_blank" rel="noopener">Falar com cliente ↗<\/a>${f.e==='Entrega'?`<a class="mf-button" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f.a||'Manaus')}" target="_blank" rel="noopener">Ver endereço ↗<\/a>`:''}${btn('Imprimir pedido','print-order')}${btn('Apagar pedido','delete-order',`data-id="${o.id}"`)}<\/div><form class="mf-form" data-mf="order"><div class="two"><label>Status<select name="status">${options(statuses,o.status)}<\/select><\/label>${field('Taxa de entrega (R$)','delivery_fee',o.delivery_fee??'','number','min="0" step="0.01" placeholder="A confirmar"')}<\/div><div class="two">${field('Data agendada','periodo_data',f.periodo_data||today(),'date','required')}<label>Período<select name="periodo"><option value="manha" ${f.periodo==='manha'?'selected':''}>Manhã · 08h–12h<\/option><option value="tarde" ${f.periodo==='tarde'?'selected':''}>Tarde · 13h–21h<\/option><\/select><\/label><\/div><div class="two">${field('Líquido esperado após taxas (R$)','net',o.net,'number','required min="0" step="0.01"')}${field('Valor já recebido (R$)','received',o.received,'number','required min="0" step="0.01"')}<\/div><div class="two">${field('Data da nova entrada / ajuste','received_day',today(),'date','required')}${btn('Usar total com a entrega','calculate-net')}<\/div><p class="mf-hint">Inclua as taxas do cartão no líquido esperado. Ao alterar o valor recebido, a diferença entra no financeiro na data escolhida.<\/p><h3 style="font:22px Georgia,serif;margin-top:12px">Parcelas e vencimentos<\/h3><p class="mf-hint">Deixe sem parcelas para recebimento único. Para parcelar, distribua o líquido esperado e marque cada pagamento. Parcelas vencidas aparecem em destaque no financeiro.<\/p><div class="mf-controls"><input id="mf-install-count" type="number" min="1" max="24" value="${Math.max(1,o.installments?.length||1)}" aria-label="Quantidade de parcelas" style="width:85px!important">${btn('Gerar parcelas mensais','generate-installments')}${btn('+ Parcela','add-installment')}<\/div><div class="mf-installments" id="mf-installments">${(o.installments||[]).map(installmentRow).join('')}<\/div><label>Observações internas<textarea name="staff_note" rows="3">${E(o.staff_note)}<\/textarea><\/label><p class="mf-error" id="mf-form-error" hidden role="alert"><\/p>${footer()}<\/form>`);}
+function openOrder(id){
+ const o=D.orders.find(x=>String(x.id)===String(id));if(!o)return;
+ if(!canSell())return openOperationalOrder(o);
+ editOrder=o;const f=o.data;
+ showModal('Pedido #MF-'+o.id,`<div class="mf-order-overview"><div class="mf-order-actions">${orderBadge(o)}${unpaid(o)?'<span class="mf-stage" data-stage="payment">Aguardando pagamento</span>':''}${deliveryAction(o)}</div><div class="mf-detail-grid"><div><b>Cliente</b><p>${E(f.c)} · ${E(f.t)}</p>${sellerLine(o)}</div><div><b>Quem recebe</b><p>${E(f.rn||f.c)} · ${E(f.rt||f.t)}</p>${f.an?'<small>Entrega anônima</small>':''}</div><div>${receiving(f,true)}<small>${E(schedule(f))}</small></div><div><b>Pagamento</b><p>${E(f.p||'A definir')}</p><small>${R(o.received)} recebido</small></div></div>
+ <div class="mf-order-items">${(f.itens||[]).map(i=>`<div>${E(i.q)}× ${E(i.n)} <b>${R(i.q*i.p)}</b></div>`).join('')}<strong>Total: ${R(gross(o))}</strong></div>${f.m?`<p class="mf-order-message"><b>Cartão:</b> ${E(f.m)}</p>`:''}${orderTimeline(o)}
+ <div class="mf-row-actions"><a class="mf-button" href="https://wa.me/${E(phoneDigits(f.t))}" target="_blank" rel="noopener">Falar com cliente ↗</a>${f.e==='Entrega'?`<a class="mf-button" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f.a||'Manaus')}" target="_blank" rel="noopener">Ver endereço ↗</a>`:''}${btn('Imprimir pedido','print-order')}${pending(o)?btn('Editar informações','edit-pending',orderAttrs(o)):''}${btn('Apagar pedido','delete-order',orderAttrs(o))}</div>
+ <details class="mf-order-settings"><summary>Etapa, agendamento e financeiro</summary><form class="mf-form" data-mf="order"><div class="two"><label>Status<select name="status">${options(statuses,o.status)}<\/select><\/label>${field('Taxa de entrega (R$)','delivery_fee',o.delivery_fee??'','number','min="0" step="0.01" placeholder="A confirmar"')}<\/div><div class="two">${field('Data agendada','periodo_data',f.periodo_data||today(),'date','required')}<label>Período<select name="periodo"><option value="manha" ${f.periodo==='manha'?'selected':''}>Manhã · 08h–12h<\/option><option value="tarde" ${f.periodo==='tarde'?'selected':''}>Tarde · 13h–21h<\/option><\/select><\/label><\/div><div class="two">${field('Líquido esperado após taxas (R$)','net',o.net,'number','required min="0" step="0.01"')}${field('Valor já recebido (R$)','received',o.received,'number','required min="0" step="0.01"')}<\/div><div class="two">${field('Data da nova entrada / ajuste','received_day',today(),'date','required')}${btn('Usar total com a entrega','calculate-net')}<\/div><p class="mf-hint">Inclua as taxas do cartão no líquido esperado. Ao alterar o valor recebido, a diferença entra no financeiro na data escolhida.<\/p><h3 style="font:22px Georgia,serif;margin-top:12px">Parcelas e vencimentos<\/h3><p class="mf-hint">Deixe sem parcelas para recebimento único. Para parcelar, distribua o líquido esperado e marque cada pagamento. Parcelas vencidas aparecem em destaque no financeiro.<\/p><div class="mf-controls"><input id="mf-install-count" type="number" min="1" max="24" value="${Math.max(1,o.installments?.length||1)}" aria-label="Quantidade de parcelas" style="width:85px!important">${btn('Gerar parcelas mensais','generate-installments')}${btn('+ Parcela','add-installment')}<\/div><div class="mf-installments" id="mf-installments">${(o.installments||[]).map(installmentRow).join('')}<\/div><label>Observações internas<textarea name="staff_note" rows="3">${E(o.staff_note)}<\/textarea><\/label><p class="mf-error" id="mf-form-error" hidden role="alert"><\/p>${footer()}<\/form></details></div>`,true);
+}
 function openNewOrder(){showModal('Registrar venda manual',`<form class="mf-form" data-mf="manual">${field('Nome do cliente','c','','text','required')}${field('Telefone','t','','tel','required')}<label>Produtos / descrição<textarea name="item" rows="3" required><\/textarea><\/label><div class="two">${field('Total dos produtos (R$)','subtotal','','number','required min="0" step="0.01"')}<label>Forma de pagamento<select name="p">${options(['Pix','Crédito','Débito','PagSeguro','Mercado Pago','Crediário Bemol'],'Pix')}<\/select><\/label><\/div><div class="two">${field('Data da retirada / entrega','periodo_data',today(),'date','required')}<label>Período<select name="periodo"><option value="manha">Manhã · 08h–12h<\/option><option value="tarde">Tarde · 13h–21h<\/option><\/select><\/label><\/div><label>Recebimento<select name="e"><option>Retirada<\/option><option>Entrega<\/option><\/select><\/label>${field('Endereço de entrega (se houver)','a')}${field('Quem vai receber (se houver)','rn')}${field('Telefone de quem recebe','rt','','tel')}<button type="submit" class="mf-button primary">Registrar e abrir pedido<\/button><\/form>`);}
 function exportFile(name,text,mime){const a=document.createElement('a');const url=URL.createObjectURL(new Blob([text],{type:mime}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function printOrder(){const o=editOrder;if(!o)return;const w=window.open('','_blank');if(!w)return toast('Permita a abertura da impressão no navegador.');w.document.write(`<!doctype html><html lang="pt-BR"><head><title>Pedido MF-${o.id}<\/title><style>body{font:14px system-ui;max-width:700px;margin:35px auto;padding:20px}h1{font:30px Georgia}p{white-space:pre-wrap}td{padding:8px;border-bottom:1px solid #ddd}table{width:100%}<\/style><\/head><body><h1>Manaus Flores · Pedido MF-${o.id}<\/h1><p>${E(o.data.c)} · ${E(o.data.t)}<\/p><p>${E(o.data.e)} · ${date(o.data.periodo_data)} · ${o.data.periodo==='manha'?'Manhã':'Tarde'}<br>${E(o.data.a||MF_SETTINGS.address)}<\/p><p>Recebedor: ${E(o.data.rn||o.data.c)} · ${E(o.data.rt||o.data.t)}${o.data.an?'<br>ENTREGA ANÔNIMA':''}<\/p><table>${(o.data.itens||[]).map(x=>`<tr><td>${E(x.q)}× ${E(x.n)}<\/td>${canSell()?`<td>${R(x.q*x.p)}<\/td>`:''}<\/tr>`).join('')}<\/table>${canSell()?`<p>Produtos: ${R(o.subtotal)}<br>Entrega: ${o.delivery_fee===null?'A combinar':R(o.delivery_fee)}<br>Total: ${R(gross(o))}<\/p>`:''}<p>Status: ${E(o.status)}<\/p><h2>Mensagem do cartão<\/h2><p>${E(o.data.m||'Sem mensagem')}<\/p><\/body><\/html>`);w.document.close();w.focus();w.print();}
@@ -189,14 +697,18 @@ async function handleAction(el){const a=el.dataset.ma,id=el.dataset.id;if(!actio
  if(a==='delete-order')return openDeleteOrder(id);
  if(a==='deleted-orders')return openDeletedOrders();
  if(a==='restore-order'){await api('restore_order',{id});await refresh();return openDeletedOrders();}
- if(a==='nav'){if(!allowedKeys().includes(el.dataset.tab))return;if(settingsDirty){if(!confirm('Descartar as configurações ainda não salvas?'))return;settingsDirty=false;}if(el.dataset.tab==='produtos')D.catalog_version='';location.hash='#sistema/'+el.dataset.tab;return;}
- if(a==='visit'){location.href=siteUrl;return;}
+ if(a==='nav'){if(el.dataset.tab===tab)return setMenu(false,true);if(!allowedKeys().includes(el.dataset.tab))return;if(settingsDirty){if(!confirm('Descartar as configurações ainda não salvas?'))return;settingsDirty=false;}if(el.dataset.tab==='produtos')D.catalog_version='';location.hash='#sistema/'+el.dataset.tab;return;}
+ if(a==='visit'){location.href=localCatalog;return;}
  if(a==='setup-toggle'){setup=!setup;return login();}
  if(a==='seller-links'&&canSell())return showSellerLinks();
  if(a==='copy-seller-link'&&canSell()){
   const input=el.closest('.two').querySelector('input');
   try{await navigator.clipboard.writeText(input.value);toast('Link copiado.');}
-  catch(_){input.focus();input.select();toast('Copie o link selecionado.');}
+  catch(_){
+    input.focus();input.select();
+    const copied = document.execCommand('copy');
+    toast(copied ? 'Link copiado.' : 'Copie o link selecionado.');
+  }
   return;
  }
  if(a==='close-modal')return closeModal();
@@ -211,6 +723,25 @@ async function handleAction(el){const a=el.dataset.ma,id=el.dataset.id;if(!actio
  if(a==='stock'||a==='new-stock')return openStock(id);
  if(a==='expense'||a==='new-expense')return openExpense(id);
  if(a==='delete-stock'||a==='delete-expense'){if(!confirm('Excluir este registro?'))return;await api(a.replaceAll('-','_'),{id});closeModal(true);await refresh();return;}
+ if(a==='menu-toggle')return setMenu(!menuOpen);
+ if(a==='menu-close')return setMenu(false,true);
+ if(a==='theme'){dark=!dark;try{localStorage.setItem('mf:theme',dark?'dark':'light');}catch(_){}render();$('[data-ma="theme"]',panel)?.focus();return;}
+ if(a==='dashboard-stage'){dashboardStage=el.dataset.stage;location.hash='#sistema/pedidos';return;}
+ if(a==='clear-order-filters'){query='';receiveFilter='';paymentFilter='';orderSort='recent';filter='';orderPage=1;if(tab==='historico'){historyRange='todos';historyAnchor=today();}else{range='mes';anchor=today();}render();return;}
+ if(a==='order-page'){orderPage=Number(el.dataset.page);render();return;}
+ if(a==='order-stage'){filter=filter===el.dataset.stage?'':el.dataset.stage;orderPage=1;render();return;}
+ if(a==='edit-pending')return openPendingEditor(id);
+ if(a==='complete-delivery'){
+  const o=D.orders.find(order=>String(order.id)===id);
+  const question=canSell()&&o&&unpaid(o)
+   ?'O pedido #MF-'+id+' tem saldo de '+R(dueTotal(o))+'. Confirmar a entrega mesmo assim?'
+   :'Confirmar a entrega do pedido #MF-'+id+'?';
+  if(!o||o.status!=='Em entrega'||o.data.e!=='Entrega'||!(canSell()||me?.role==='entregador')||el.disabled||!confirm(question))return;
+  el.disabled=true;
+  try{await api('order_status',{id,status:'Concluído',expected_updated_at:el.dataset.version});if(modal.open)closeModal(true);await refresh();toast('Entrega confirmada.');}
+  finally{if(el.isConnected)el.disabled=false;}
+  return;
+ }
  if(a==='order')return openOrder(id);
  if(a==='new-order')return openNewOrder();
  if(a==='print-order')return printOrder();
@@ -219,17 +750,38 @@ async function handleAction(el){const a=el.dataset.ma,id=el.dataset.id;if(!actio
  if(a==='add-installment'){$('#mf-installments').insertAdjacentHTML('beforeend',installmentRow());formDirty=true;return;}
  if(a==='remove-installment'){el.closest('.mf-installment').remove();formDirty=true;return;}
  if(a==='backup'){return exportFile('Manaus_Flores_Backup_'+today()+'.json',JSON.stringify({exported_at:new Date().toISOString(),...D},null,2),'application/json');}
- if(a==='export-orders'){const rows=[['Pedido','Cliente','Telefone','Data do pedido','Data agendada','Periodo','Forma','Produtos','Total','Recebido','Liquido esperado','Status'],...D.orders.filter(o=>within(dayOf(o.created_at))).map(o=>[o.id,o.data.c,o.data.t,dayOf(o.created_at),o.data.periodo_data,o.data.periodo,o.data.p,(o.data.itens||[]).map(x=>x.q+'x '+x.n).join(', '),gross(o),o.received,o.net,o.status])];const safe=x=>{let t=String(x??'');if(/^[=+@\-\t\r]/.test(t))t="'"+t;return '"'+t.replaceAll('"','""')+'"';};return exportFile('Pedidos_Manaus_'+today()+'.csv','\uFEFF'+rows.map(row=>row.map(safe).join(';')).join('\r\n'),'text/csv;charset=utf-8');}
+ if(a==='export-orders'){const rows=[['Pedido','Cliente','Telefone','Data do pedido','Data agendada','Periodo','Forma','Produtos','Total','Recebido','Liquido esperado','Status'],...(['pedidos','historico','producao','entregas'].includes(tab)?orderResults():D.orders.filter(o=>within(dayOf(o.created_at)))).map(o=>[o.id,o.data.c,o.data.t,dayOf(o.created_at),o.data.periodo_data,o.data.periodo,o.data.p,(o.data.itens||[]).map(x=>x.q+'x '+x.n).join(', '),gross(o),o.received,o.net,o.status])];const safe=x=>{let t=String(x??'');if(/^[=+@\-\t\r]/.test(t))t="'"+t;return '"'+t.replaceAll('"','""')+'"';};return exportFile('Pedidos_Manaus_'+today()+'.csv','\uFEFF'+rows.map(row=>row.map(safe).join(';')).join('\r\n'),'text/csv;charset=utf-8');}
  if(a==='password')return showModal('Alterar minha senha',`<form class="mf-form" data-mf="password">${field('Senha atual','current','','password','required autocomplete="current-password"')}${field('Nova senha · mínimo 10 caracteres','password','','password','required minlength="10" autocomplete="new-password"')}${footer()}<\/form>`);
 }
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuOpen&&!modal.open)setMenu(false,true);});
+document.addEventListener('toggle',e=>{if(e.target.id==='mf-pending')pendingOpen=e.target.open;},true);
 document.addEventListener('click',async e=>{const el=e.target.closest('[data-ma]');if(!el)return;try{await handleAction(el);}catch(error){toast(message(error));}});
-document.addEventListener('change',async e=>{const el=e.target;if(el.name==='role'&&el.closest('form[data-mf="user"]')){const help=$('#mf-role-help');if(help)help.textContent=el.value==='administrador'?'Acesso a todas as áreas.':ROLE_TABS[el.value].map(k=>tabs[k][0]).join(' · ');}if(el.id==='mf-range'){range=el.value;render();}else if(el.id==='mf-anchor'){anchor=el.value||today();render();}else if(el.id==='mf-status-filter'){filter=el.value;render();}else if(el.id==='mf-image-files'){try{await addFiles(el.files);}catch(error){toast(message(error));}}});
-let searchTimer;document.addEventListener('input',e=>{if(e.target.id!=='mf-fee-search'&&e.target.closest('form[data-mf="settings"],form[data-mf="delivery-fees"]'))settingsDirty=true;if(e.target.id==='mf-fee-search'){filterDeliveryRows(e.target.closest('form'));return;}if(e.target.id!=='mf-search')return;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{query=e.target.value;const pos=e.target.selectionStart;$('#mf-view').innerHTML=({pedidos:orders,producao:orders,entregas:orders,produtos:productsView,clientes:clientsView}[tab])();const input=$('#mf-search');input?.focus();if(input&&input.type!=='search')input.setSelectionRange(pos,pos);},200);});
+document.addEventListener('change',async e=>{const el=e.target;if(el.name==='role'&&el.closest('form[data-mf="user"]')){const help=$('#mf-role-help');if(help)help.textContent=el.value==='administrador'?'Acesso a todas as áreas.':ROLE_TABS[el.value].map(k=>tabs[k][0]).join(' · ');}if(['mf-receive-filter','mf-payment-filter','mf-order-sort'].includes(el.id)){
+ if(el.id==='mf-receive-filter')receiveFilter=el.value;
+ if(el.id==='mf-payment-filter')paymentFilter=el.value;
+ if(el.id==='mf-order-sort')orderSort=el.value;
+ orderPage=1;render();$('#'+el.id,panel)?.focus();return;
+ }if(el.id==='mf-range'){orderPage=1;if(tab==='historico')historyRange=el.value;else range=el.value;render();}else if(el.id==='mf-anchor'){orderPage=1;if(tab==='historico')historyAnchor=el.value||today();else anchor=el.value||today();render();}else if(el.id==='mf-status-filter'){filter=el.value;render();}else if(el.id==='mf-image-files'){try{await addFiles(el.files);}catch(error){toast(message(error));}}});
+let searchTimer;document.addEventListener('input',e=>{if(e.target.id!=='mf-fee-search'&&e.target.closest('form[data-mf="settings"],form[data-mf="delivery-fees"]'))settingsDirty=true;if(e.target.id==='mf-fee-search'){filterDeliveryRows(e.target.closest('form'));return;}if(e.target.id!=='mf-search')return;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{if(!e.target.isConnected)return;query=e.target.value;orderPage=1;const pos=e.target.selectionStart;$('#mf-view').innerHTML=views[tab]();const input=$('#mf-search');input?.focus();if(input&&input.type!=='search')input.setSelectionRange(pos,pos);},200);});
 document.addEventListener('paste',async e=>{if(e.target.id!=='mf-paste-image')return;const files=Array.from(e.clipboardData?.items||[]).filter(x=>x.type.startsWith('image/')).map(x=>x.getAsFile());if(files.length){e.preventDefault();try{await addFiles(files);}catch(error){toast(message(error));}}});
 document.addEventListener('submit',async e=>{const f=e.target;if(!f.dataset.mf)return;e.preventDefault();const submit=$('[type=submit]',f)||$('button:not([type=button])',f);if(submit?.disabled)return;const data=Object.fromEntries(new FormData(f)),type=f.dataset.mf;if(submit)submit.disabled=true;try{
  if(type==='login'||type==='activate'){const j=await MF_API(type,data);token=j.token;updateIdentity(j.me);try{sessionStorage.setItem('mf:session',token);}catch(_){}authed=true;setup=false;await refresh();toast('Acesso realizado.');return;}
  if(type==='delete-order'){await api('delete_order',{id:f.dataset.id,password:data.password});closeModal(true);await refresh();toast('Pedido apagado.');return;}
  if(type==='user'){await api('save_user',{username:data.username,name:data.name,role:f.elements.role.value,active:f.elements.active.checked,password:data.password,create:!editUser});closeModal(true);await refresh();toast('Usuário salvo.');return;}
+ if(type==='quick-payment'||type==='edit-pending'){
+  if(!canSell())throw new Error('sem_permissao');
+  const o=D.orders.find(order=>String(order.id)===f.dataset.id);
+  if(!o||o.updated_at!==f.dataset.version)throw new Error('pedido_alterado');
+  if(type==='quick-payment'){
+   if(!unpaid(o)||o.installments?.length||o.delivery_fee==null||!f.elements.settle.checked)throw new Error('Confira o saldo e as parcelas do pedido.');
+   await api('save_order',saveOrderValues(o,{received:o.net,received_day:today()}));
+  }else{
+   if(!pending(o))throw new Error('O pedido já saiu da fila de pendências.');
+   await api('save_order',saveOrderValues(o,{periodo_data:data.periodo_data,periodo:data.periodo,staff_note:data.staff_note}));
+   closeModal(true);
+  }
+  await refresh();toast(type==='quick-payment'?'Pagamento recebido.':'Informações atualizadas.');return;
+ }
  if(type==='operational'){await api('order_status',{id:editOrder.id,status:data.status,expected_updated_at:editOrder.updated_at});closeModal(true);await refresh();toast('Status atualizado.');return;}
  if(type==='product'){if(!editImages.length)throw new Error('Adicione pelo menos uma foto.');const p={...editProduct,...data,price:number(data.price),main_image:editImages[0],gallery_images:editImages.slice(1),available:f.elements.available.checked,active:f.elements.active.checked};delete p.image_url;await api('save_product',p);D.catalog_version='';await MF_API('catalog',{p_lim:100}).then(SF.setRows);}
  else if(type==='category'){await api('save_category',data);await refresh();openCategories();return;}
